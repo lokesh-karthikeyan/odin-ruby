@@ -8,4 +8,5 @@ Get hands-on-experience in the ruby language while learning the basic concepts o
 
 ## Project List
 
-* [Caesar Cipher]()
+* [Caesar Cipher](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/caesar_cipher)
+* [Sub Strings](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/sub_strings)
