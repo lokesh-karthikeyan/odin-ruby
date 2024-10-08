@@ -11,3 +11,4 @@ Get hands-on-experience in the ruby language while learning the basic concepts o
 * [Caesar Cipher](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/caesar_cipher)
 * [Sub Strings](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/sub_strings)
 * [Stock Picker](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/stock_picker)
+* [Bubble Sort](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/bubble_sort)
