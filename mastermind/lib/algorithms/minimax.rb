@@ -1,51 +1,54 @@
 # frozen_string_literal: true
 
 # Minimax algorithm to determine the next possible guess.
-# For the current possible guesses, each guess enumerates through all the possibility to determine the next best guess.
-# The guess is chosen from the best of the worst cases.
-# Worst case is that maximum number of outcomes a guess can have.
-# Or least possibilities is eliminated from that guess, thus still retains many possibilities.
 class Minimax
   private
 
   attr_reader :current_possibilities, :all_possibilities
-  attr_accessor :outcome_of_a_possibility, :probable_outcomes_of_a_possibility
+  attr_accessor :probability_of_scores
+
+  include Feedback
 
   def initialize(current_possibilities, all_possibilities)
     @current_possibilities = current_possibilities
     @all_possibilities = all_possibilities
-    @outcome_of_a_possibility = Hash.new { |hash, key| hash[key] = {} }
-    @probable_outcomes_of_a_possibility = Hash.new { |hash, key| hash[key] = Hash.new(0) }
+    @probability_of_scores = Hash.new { |hash, key| hash[key] = Hash.new(0) }
   end
 
-  def generate_possibilities_and_probable_outcomes
+  # From the list of current_possibilities, make each possibility to enumerate through all_possibilities.
+  # For each guess, note the probability of each different score.
+  # Example -> {"1333"=>{"BXXX"=>125, "BBXX"=>75, "BBBX"=>15, "BBBB"=>1}}
+  def generate_probabilities_of_scores
     current_possibilities.each do |possible_guess|
       all_possibilities.each do |possible_answer|
         score = outcome_of_the_guess(possible_guess, possible_answer)
-        outcome_of_a_possibility[possible_guess.to_sym][possible_answer.to_sym] = score
-        probable_outcomes_of_a_possibility[possible_guess.to_sym][score.to_sym] += 1
+        probability_of_scores[possible_guess][score] += 1
       end
     end
   end
 
-  def worst_outcome_of_a_possibility
+  # For each guess, it finds the guess that yields high probable count of answers.
+  # In other words, the worst case -> where the guess will only eliminate a few possibilities.
+  # Example -> {"1333"=>317, "1334"=>276, "1335"=>276}
+  def worst_outcome_count_for_a_possibility
     max_score_of_a_possibility = {}
-    probable_outcomes_of_a_possibility.each_pair do |guess, score|
+    probability_of_scores.each_pair do |guess, score|
       maximum_of_scores = score.max_by { |_key, value| value }
       max_score_of_a_possibility[guess] = maximum_of_scores.last
     end
     max_score_of_a_possibility
   end
 
+  # Get the minimum from the worst case list.
   def best_of_the_worst_outcome(worst_possibilities)
-    worst_possibilities.key(worst_possibilities.value.min)
+    worst_possibilities.key(worst_possibilities.values.min)
   end
 
   public
 
   def best_guess
-    generate_possibilities_and_probable_outcomes
-    max_score_list_of_each_possibility = worst_outcome_of_a_possibility
+    generate_probabilities_of_scores
+    max_score_list_of_each_possibility = worst_outcome_count_for_a_possibility
     best_of_the_worst_outcome(max_score_list_of_each_possibility)
   end
 end
