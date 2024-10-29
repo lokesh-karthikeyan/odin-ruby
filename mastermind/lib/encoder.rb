@@ -13,7 +13,8 @@ class Encoder
   include TerminalMessages
   include Feedback
 
-  attr_reader :secret_color_code, :guess_history, :score_history, :all_color_codes
+  attr_reader :secret_color_code, :all_color_codes
+  attr_accessor :guess_history, :score_history, :current_feedback, :guess, :max_guess
 
   def initialize
     colors_code = WorstCase.new
@@ -21,27 +22,55 @@ class Encoder
     @secret_color_code = all_color_codes.to_a.sample
     @guess = 1
     @max_guess = 12
+    @guess_history = []
+    @score_history = []
+    @current_feedback = ''
   end
 
   def start_guessing
     while guess <= max_guess
-      current_guess = make_player_to_guess
-      current_guess = notify_invalid_guess until valid_guess?(current_guess)
+      current_guess = enter_valid_guess
       guess += 1
-      if generate_score(current_guess) == 'BBBB'
-        decoder_is_won
-        break
-      end
+      result = determine_win_or_lose?(current_guess)
+      break if result
+
+      update_feedback(current_feedback)
     end
+  end
+
+  def enter_valid_guess
+    current_guess = make_player_to_guess
+    current_guess = notify_invalid_guess until valid_guess?(current_guess)
+    current_guess
   end
 
   def valid_guess?(guessed_code)
     all_color_codes.include?(guessed_code)
   end
 
-  def decoder_is_won; end
+  def determine_win_or_lose?(guess)
+    current_feedback = generate_score(guess)
+    match_won = won?(current_feedback)
+    player_is_won if match_won
+    match_lost = lost?
+    player_is_lost if match_lost
+    match_won || match_lost
+  end
+
+  def won?(score)
+    score.eql?('BBBB')
+  end
+
+  def lost?
+    guess > max_guess
+  end
 
   def generate_score(guessed_code)
-    outcome_of_the_guess(guessed_code, secret_color_code)
+    score = outcome_of_the_guess(guessed_code, secret_color_code)
+    guess_in_colors = convert_code_to_colors(guessed_code)
+    score_in_array = score.chars
+    guess_history << guess_in_colors
+    score_history << score_in_array
+    score
   end
 end
