@@ -37,4 +37,23 @@ module Feedback
     end
     score
   end
+
+  def color_codes
+    {
+      'green' => 1,
+      'red' => 2,
+      'blue' => 3,
+      'purple' => 4,
+      'orange' => 5,
+      'yellow' => 6
+    }
+  end
+
+  def convert_colors_to_code(guess_of_colors)
+    guess_of_colors = guess_of_colors.tr(' ', '').downcase.split(',')
+    guess_of_colors.map! do |color|
+      color_codes[color]
+    end
+    guess_of_colors.join
+  end
 end
