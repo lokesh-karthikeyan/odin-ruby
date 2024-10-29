@@ -67,10 +67,14 @@ class Encoder
 
   def generate_score(guessed_code)
     score = outcome_of_the_guess(guessed_code, secret_color_code)
-    guess_in_colors = convert_code_to_colors(guessed_code)
-    score_in_array = score.chars
-    guess_history << guess_in_colors
-    score_history << score_in_array
+    update_history(guessed_code, score)
     score
+  end
+
+  def update_history(guessed_code, response_of_the_guess)
+    guess_in_colors = convert_code_to_colors(guessed_code)
+    response_of_the_guess = response_of_the_guess.chars
+    guess_history << guess_in_colors
+    score_history << response_of_the_guess
   end
 end
