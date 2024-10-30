@@ -56,11 +56,28 @@ module TerminalMessages
 
   def show_answer
     answer = convert_code_to_colors(secret_color_code)
+    answer = apply_colors(answer)
     puts '+--------------•--------------+'.color_it('bright_green')
     print '|     '.color_it('bright_green')
     answer.each { |color| print "  #{color}  " }
     puts '     |'.color_it('bright_green')
     puts '+--------------•--------------+'.color_it('bright_green')
+  end
+
+  def apply_colors(colors_list)
+    colors_list.map! { |color| symbols_of_color[color] }
+    colors_list
+  end
+
+  def symbols_of_color
+    {
+      'green' => '⬤'.color_it('green'),
+      'red' => '⬤'.color_it('red'),
+      'blue' => '⬤'.color_it('blue'),
+      'purple' => '⬤'.color_it('purple'),
+      'orange' => '⬤'.color_it('orange'),
+      'yellow' => '⬤'.color_it('yellow')
+    }
   end
 
   def make_computer_to_guess; end
