@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
 require_relative 'algorithms/knuth_worst_case'
-require_relative 'terminal_messages'
+require_relative 'terminal/terminal_messages'
 require_relative 'feedback'
+require_relative 'terminal/convert_to_symbols'
 
 # Here, the computer generates a random color combo as a secret code. It acts as an encoder.
 # Players has to guess the secret code within the number of available guesses.
 class Encoder
   private
 
-  include WorstCase
   include TerminalMessages
   include Feedback
+  include ConvertToSymbols
 
-  attr_reader :secret_color_code, :all_color_codes
-  attr_accessor :guess_history, :score_history, :current_feedback, :guess, :max_guess
+  attr_reader :secret_color_code, :all_color_codes, :max_guess
+  attr_accessor :guess_history, :score_history, :current_feedback, :guess
 
   def initialize
     colors_code = WorstCase.new
@@ -25,17 +26,6 @@ class Encoder
     @guess_history = []
     @score_history = []
     @current_feedback = ''
-  end
-
-  def start_guessing
-    while guess <= max_guess
-      current_guess = enter_valid_guess
-      guess += 1
-      result = determine_win_or_lose?(current_guess)
-      break if result
-
-      update_feedback(current_feedback)
-    end
   end
 
   def enter_valid_guess
@@ -73,8 +63,22 @@ class Encoder
 
   def update_history(guessed_code, response_of_the_guess)
     guess_in_colors = convert_code_to_colors(guessed_code)
-    response_of_the_guess = response_of_the_guess.chars
-    guess_history << guess_in_colors
-    score_history << response_of_the_guess
+    colored_color_symbol = color_to_colored_symbol(guess_in_colors)
+    colored_score_symbol = score_to_colored_symbols(response_of_the_guess)
+    @guess_history << colored_color_symbol
+    @score_history << colored_score_symbol
+  end
+
+  public
+
+  def start_guessing
+    while guess <= max_guess
+      current_guess = enter_valid_guess
+      @guess += 1
+      result = determine_win_or_lose?(current_guess)
+      break if result
+
+      update_feedback(current_feedback)
+    end
   end
 end
