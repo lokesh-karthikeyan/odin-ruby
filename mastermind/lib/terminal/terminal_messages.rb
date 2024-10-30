@@ -2,12 +2,23 @@
 
 require_relative '../feedback'
 require_relative 'colored_text'
+require_relative 'beautify_logs'
+require_relative 'convert_to_symbols'
 
-# This Module contains methods related to terminal interface.
-# Such as the messages to be displayed while asking a guess & making a guess.
+# This Module contains messages related to terminal interface invloving player as a decoder.
+# Such as the messages to be displayed while asking a guess and showing feedback.
 module TerminalMessages
   include Feedback
+  include BeautifyLogs
+  include ConvertToSymbols
   using ColoredText
+
+  def introduction
+    print_mastermind_title
+    puts "You're a #{'CODE BREAKER'.color_it('steel_blue')} and I'm the #{'CODE MAKER'.color_it('steel_blue')}.".color_it('light_cyan') # rubocop:disable Layout/LineLength
+    puts "Can you guess the right color combinations within #{'12'.color_it('red')} moves?".color_it('light_cyan')
+    puts ''
+  end
 
   def make_player_to_guess
     print "Enter your guess (#{guess}/#{max_guess}): "
@@ -20,7 +31,7 @@ module TerminalMessages
   end
 
   def update_feedback(score)
-    score_in_symbols = convert_score_to_symbols(score)
+    score_in_symbols = score_to_colored_symbols(score)
     puts '+----------•----------+'.color_it('cyan')
     print '|'.color_it('cyan')
     score_in_symbols.each { |score_symbol| print "  #{score_symbol}  " }
@@ -28,57 +39,29 @@ module TerminalMessages
     puts '+----------•----------+'.color_it('cyan')
   end
 
-  def convert_score_to_symbols(score_pegs)
-    score_pegs = score_pegs.chars
-    score_pegs.map! { |peg| symbols_of_score[peg] }
-    score_pegs
-  end
-
-  def symbols_of_score
-    {
-      'B' => "\u{2714}".color_it('green'),
-      'W' => "\u{25EF}".color_it('yellow'),
-      'X' => "\u{1F5D9}".color_it('red')
-    }
-  end
-
   def player_is_won
-    puts "Awesome! You've won in #{guess} guesses".color_it('green')
+    puts ''
+    puts "Awesome! You've won in #{guess - 1} guesses".color_it('green')
     show_logs
   end
 
   def player_is_lost
-    puts "You've lost! All #{guess} guesses have been used.".color_it('red')
+    puts ''
+    puts "You've lost! All #{guess - 1} guesses have been used.".color_it('red')
     show_logs
+    puts ''
     puts 'The right combination is:- '.color_it('bright_green')
+    puts ''
     show_answer
   end
 
   def show_answer
     answer = convert_code_to_colors(secret_color_code)
-    answer = apply_colors(answer)
+    answer = color_to_colored_symbol(answer)
     puts '+--------------•--------------+'.color_it('bright_green')
-    print '|     '.color_it('bright_green')
-    answer.each { |color| print "  #{color}  " }
-    puts '     |'.color_it('bright_green')
+    print '|  '.color_it('bright_green')
+    answer.each { |color| print "   #{color}  " }
+    puts '   |'.color_it('bright_green')
     puts '+--------------•--------------+'.color_it('bright_green')
   end
-
-  def apply_colors(colors_list)
-    colors_list.map! { |color| symbols_of_color[color] }
-    colors_list
-  end
-
-  def symbols_of_color
-    {
-      'green' => '⬤'.color_it('green'),
-      'red' => '⬤'.color_it('red'),
-      'blue' => '⬤'.color_it('blue'),
-      'purple' => '⬤'.color_it('purple'),
-      'orange' => '⬤'.color_it('orange'),
-      'yellow' => '⬤'.color_it('yellow')
-    }
-  end
-
-  def make_computer_to_guess; end
 end
