@@ -26,6 +26,7 @@ class Encoder
     @guess_history = []
     @score_history = []
     @current_feedback = ''
+    introduction
   end
 
   def enter_valid_guess
@@ -39,11 +40,11 @@ class Encoder
   end
 
   def determine_win_or_lose?(guess)
-    current_feedback = generate_score(guess)
+    @current_feedback = generate_score(guess)
     match_won = won?(current_feedback)
     player_is_won if match_won
     match_lost = lost?
-    player_is_lost if match_lost
+    player_is_lost if match_lost && match_won == false
     match_won || match_lost
   end
 
