@@ -12,7 +12,9 @@ module ColoredText
     'yellow' => '255;225;71',
     'cyan' => '0;255;255',
     'steel_blue' => '70;130;180',
-    'bright_green' => '102;255;0'
+    'bright_green' => '102;255;0',
+    'bright_yellow' => '255;234;0',
+    'light_cyan' => '224;255;255'
   }.freeze
 
   refine String do
