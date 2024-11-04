@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../algorithms/possibilities'
 require_relative '../color_codes'
 require_relative '../colored_text'
 
@@ -11,8 +10,8 @@ class EnquireGuess
   include ColorCodes
   using ColoredText
 
-  def initialize
-    @possibilities = Possibilities.all_possibilities
+  def initialize(possibilities)
+    @possibilities = possibilities
   end
 
   def valid_guess?(guess)
