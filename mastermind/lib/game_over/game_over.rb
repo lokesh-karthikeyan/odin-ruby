@@ -17,12 +17,12 @@ class GameOver
 
   def player_won(guess_log, score_log)
     PrintWinner.player(@count)
-    PrintLogs(guess_log, score_log)
+    PrintLogs.new(guess_log, score_log)
   end
 
   def player_lost(secret_code, guess_log, score_log)
     PrintLoser.player(@count)
-    PrintLogs(guess_log, score_log)
+    PrintLogs.new(guess_log, score_log)
     puts ''
     puts 'The right combination is:- '.color_it('bright_green')
     puts ''
@@ -31,7 +31,7 @@ class GameOver
 
   def computer_won(guess_log, score_log)
     PrintWinner.computer(@count)
-    PrintLogs(guess_log, score_log)
+    PrintLogs.new(guess_log, score_log)
   end
 
   def error_occured
