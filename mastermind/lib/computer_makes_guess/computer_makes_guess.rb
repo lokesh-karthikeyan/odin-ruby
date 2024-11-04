@@ -4,9 +4,7 @@ require_relative 'knuth_algorithm'
 require_relative 'print_guess'
 require_relative 'enquire_feedback'
 require_relative 'outcome'
-require_relative 'print_winner'
-require_relative 'print_loser'
-require_relative 'print_logs'
+require_relative '../game_over/game_over'
 require_relative 'score_icons'
 
 # This Class contains methods in which computer makes guesses based on algorithms.
@@ -44,7 +42,7 @@ class ComputerMakesGuess
   end
 
   def error_occured?
-    PrintLoser.computer if @current_guess.nil?
+    GameOver.new(@guess).error_occured if @current_guess.nil?
     @current_guess.nil?
   end
 
@@ -76,7 +74,7 @@ class ComputerMakesGuess
   end
 
   def won
-    PrintWinner.computer(@guess)
-    PrintLogs.new(@guess_history, @score_history)
+    victory = GameOver.new(@guess)
+    victory.computer_won(@guess_history, @score_history)
   end
 end
