@@ -8,6 +8,9 @@ class PrintPlayNextRound
 
   using ColoredText
   def enquire_next_round
+    puts ''
+    puts '***************************************************************'.color_it('red')
+    puts ''
     puts 'Do you want to play another round?'.color_it('light_cyan')
     puts ''
   end
