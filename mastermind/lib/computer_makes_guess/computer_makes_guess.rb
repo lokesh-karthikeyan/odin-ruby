@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
-require_relative 'knuth_algorithm'
+require_relative '../algorithms/knuth_algorithm'
 require_relative 'print_guess'
 require_relative 'enquire_feedback'
 require_relative 'outcome'
 require_relative '../game_over/game_over'
-require_relative 'score_icons'
+require_relative '../terminal_ui/score_icons'
 
 # This Class contains methods in which computer makes guesses based on algorithms.
 class ComputerMakesGuess
+  private
+
   def initialize
     @guess = 1
     @max_guess = 12
