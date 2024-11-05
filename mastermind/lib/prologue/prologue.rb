@@ -4,7 +4,7 @@ require_relative 'introduction'
 require_relative 'available_colors'
 require_relative 'rules'
 
-# This Class contains methods that prints the initial introduction & thier roles.
+# This Class contains methods that prints the initial introduction & the player's respective role.
 class Prologue
   class << self
     include Introduction
