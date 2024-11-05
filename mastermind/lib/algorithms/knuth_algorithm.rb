@@ -2,7 +2,7 @@
 
 require_relative 'possibilities'
 require_relative 'filter_possibilities'
-require_relative 'minimax'
+require_relative 'minimax/minimax'
 
 # This Class contains methods related to Donald Knuth's worst case algorithm.
 # It acts like a central class to call other classes & modules.

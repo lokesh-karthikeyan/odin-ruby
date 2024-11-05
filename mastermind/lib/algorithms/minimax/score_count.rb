@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../score'
+require_relative '../../player_makes_guess/score'
 
 # Here, all the possibilities will loop over each possibility to count each possibilities's various score & its count.
 # Example -> {"1333"=>{"BXXX"=>125, "BBXX"=>75, "BBBX"=>15, "BBBB"=>1}}

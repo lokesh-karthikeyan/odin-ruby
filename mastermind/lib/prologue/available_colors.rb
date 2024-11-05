@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'colored_text'
+require_relative '../terminal_ui/colored_text'
 
 # This Module contains method to show the list of available colors with colorized text.
 module AvailableColors

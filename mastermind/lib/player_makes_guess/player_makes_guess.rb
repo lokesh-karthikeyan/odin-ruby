@@ -4,7 +4,7 @@ require_relative '../algorithms/possibilities'
 require_relative 'enquire_guess'
 require_relative 'score'
 require_relative '../computer_makes_guess/print_guess'
-require_relative '../score_icons'
+require_relative '../terminal_ui/score_icons'
 require_relative '../game_over/game_over'
 require_relative 'print_score'
 

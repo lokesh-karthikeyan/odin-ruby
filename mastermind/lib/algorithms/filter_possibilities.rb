@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../score'
+require_relative '../player_makes_guess/score'
 
 # This Class filters out the possibilities from the total possibilities list, it's part of Donald Knuth's algorithm.
 class FilterPossibilities

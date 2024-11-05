@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'colored_text'
+require_relative '../terminal_ui/colored_text'
 
 # This Class asks the player whether he / she wants to play another round.
 class PrintPlayNextRound

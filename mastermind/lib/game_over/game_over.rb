@@ -4,7 +4,7 @@ require_relative 'print_winner'
 require_relative 'print_loser'
 require_relative 'print_logs'
 require_relative 'print_answer'
-require_relative 'colored_text'
+require_relative '../terminal_ui/colored_text'
 
 # This Class acts like a central class where it creates instances of different classes.
 # Depending whether the player (or) computer has won (or) lost.

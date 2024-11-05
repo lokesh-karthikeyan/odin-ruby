@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'colored_text'
+require_relative '../terminal_ui/colored_text'
 
 # This Class has methods to announce the loser of the current round.
 class PrintLoser

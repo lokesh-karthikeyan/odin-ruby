@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'colored_text'
+require_relative '../terminal_ui/colored_text'
 
 # This Class asks whether the player wants to be a "Code Breaker" (or) "Code Maker".
 class PrintNextRoundRoles

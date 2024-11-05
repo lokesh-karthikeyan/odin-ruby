@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'computer_makes_guess/print_guess'
-require_relative 'colored_text'
+require_relative '../computer_makes_guess/print_guess'
+require_relative '../terminal_ui/colored_text'
 
 # This Class contains method which would show the correct answer if the player is lost.
 class PrintAnswer

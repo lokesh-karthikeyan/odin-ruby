@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'colored_text'
-require_relative 'color_codes'
-require_relative 'color_icons'
+require_relative '../terminal_ui/colored_text'
+require_relative '../terminal_ui/color_codes'
+require_relative '../terminal_ui/color_icons'
 
 # This Class gets the guess(numeric) & converts to color names.
 # It then applies colors to the color icons with appropriate color.
