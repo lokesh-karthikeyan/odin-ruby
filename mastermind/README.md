@@ -14,6 +14,12 @@ Each turn you get some **feedback** about how good your guess was – whether it
 
 The video shows the gameplay & the **rules** are explained during the game.
 
+
+
+https://github.com/user-attachments/assets/b6a3b1b8-657d-4a40-b8cb-96d977fc2137
+
+
+
 **Computer** will always win within **5** moves, as it follows the [Donald Knuth's "Worst case: Five-guess algorithm"](https://en.wikipedia.org/wiki/Mastermind_(board_game)#Best_strategies_with_four_holes_and_six_colors) unless the **feedbacks** are incorrectly provided.
 
 ## Challenges
