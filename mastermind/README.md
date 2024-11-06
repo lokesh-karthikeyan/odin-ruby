@@ -30,6 +30,6 @@ https://github.com/user-attachments/assets/b6a3b1b8-657d-4a40-b8cb-96d977fc2137
 
 ## Acknowledgements
 
-* This video explains how the game is played with Knuth's algorithm [Mastermind with Steve Mould](https://www.youtube.com/watch?v=FR_71HyBytE).
-* Here is the explanation on, how the algorithms & techniques can be implemented into a code base [Beating Mastermind: Winning with the help of Donald Knuth by Adam Forsyth](https://www.youtube.com/watch?v=Okm_t5T1PiA&t=37s).
-* This article explains in detail about the working & implementation of the algorithm [Aydin Schwartz's Solving Mastermind With Python](https://betterprogramming.pub/solving-mastermind-641411708d01).
+* [Mastermind with Steve Mould's](https://www.youtube.com/watch?v=FR_71HyBytE) video explains how the game is played with Knuth's algorithm.
+* [Beating Mastermind: Winning with the help of Donald Knuth by Adam Forsyth](https://www.youtube.com/watch?v=Okm_t5T1PiA&t=37s) is a **RubyConf** video explains in detail about how the algorithms & techniques can be implemented into a code base.
+* [Aydin Schwartz's Solving Mastermind With Python](https://betterprogramming.pub/solving-mastermind-641411708d01) is an article that explains in detail about the working & implementation of the algorithm.
