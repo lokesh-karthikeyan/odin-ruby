@@ -39,5 +39,6 @@ class PrintGuess
     @guessed_code.each { |colored_icon| print "   #{colored_icon}  " }
     puts '   |'.color_it('cyan')
     puts '+--------------•--------------+'.color_it('cyan')
+    puts ''
   end
 end
