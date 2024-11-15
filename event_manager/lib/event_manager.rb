@@ -51,6 +51,16 @@ def bad_number?(number)
   number.length < 10 || number.length > 11 || (number.length == 11 && number[0] != '1')
 end
 
+def registered_hour(date_time)
+  date_time = DateTime.strptime(date_time, '%m/%d/%y %k:%M')
+  date_time.hour
+end
+
+def peak_hour(reg_hour)
+  peak_time = reg_hour.select { |_hour, count| count == reg_hour.values.max }.keys
+  peak_time.join(', ')
+end
+
 puts 'Event Manager Initialized!'
 
 contents = CSV.open('event_attendees.csv', headers: true, header_converters: :symbol)
@@ -58,13 +68,19 @@ contents = CSV.open('event_attendees.csv', headers: true, header_converters: :sy
 # template_letter = File.read('form_letter.erb')
 # erb_template = ERB.new template_letter
 
+reg_hour = Hash.new(0)
+
 contents.each do |row|
   # id = row[0]
-  name = row[:first_name]
+  # name = row[:first_name]
   # zipcode = clean_zipcode(row[:zipcode])
   # legislators = legislators_by_zipcode(zipcode)
   # form_letter = erb_template.result(binding)
   # save_thank_you_letter(id, form_letter)
-  phone_number = clean_phone_number(row[:homephone])
-  puts "#{name} : #{phone_number} || #{phone_number.length}"
+  # phone_number = clean_phone_number(row[:homephone])
+  # puts "#{name} : #{phone_number} || #{phone_number.length}"
+  reg_date = row[:regdate]
+  reg_hour[registered_hour(reg_date)] += 1
 end
+
+p peak_hour(reg_hour)
