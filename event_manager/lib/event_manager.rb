@@ -61,6 +61,20 @@ def peak_hour(reg_hour)
   peak_time.join(', ')
 end
 
+def registered_day(date_time)
+  date_time = DateTime.strptime(date_time, '%m/%d/%y %k:%M')
+  date_time.wday
+end
+
+def peak_day(reg_wday)
+  peak_wday = reg_wday.select { |_hour, count| count == reg_wday.values.max }.keys
+  peak_day_of_the_week = []
+  peak_wday.each do |day|
+    peak_day_of_the_week << Date::DAYNAMES[day.to_i]
+  end
+  peak_day_of_the_week.join(', ')
+end
+
 puts 'Event Manager Initialized!'
 
 contents = CSV.open('event_attendees.csv', headers: true, header_converters: :symbol)
@@ -69,6 +83,7 @@ contents = CSV.open('event_attendees.csv', headers: true, header_converters: :sy
 # erb_template = ERB.new template_letter
 
 reg_hour = Hash.new(0)
+reg_wday = Hash.new(0)
 
 contents.each do |row|
   # id = row[0]
@@ -81,6 +96,8 @@ contents.each do |row|
   # puts "#{name} : #{phone_number} || #{phone_number.length}"
   reg_date = row[:regdate]
   reg_hour[registered_hour(reg_date)] += 1
+  reg_wday[registered_day(reg_date)] += 1
 end
 
 p peak_hour(reg_hour)
+p peak_day(reg_wday)
