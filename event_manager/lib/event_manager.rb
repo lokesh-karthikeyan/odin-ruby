@@ -34,19 +34,37 @@ def save_thank_you_letter(id, form_letter)
   end
 end
 
+def clean_phone_number(phone_number)
+  phone_number = phone_number.to_s.delete('^0-9')
+  phone_number = if bad_number?(phone_number)
+                   'X' * 10
+                 elsif phone_number.length == 11 && phone_number[0] == '1'
+                   phone_number[1..10]
+                 else
+                   phone_number
+                 end
+
+  "#{phone_number[0..2]}-#{phone_number[3..5]}-#{phone_number[6..]}"
+end
+
+def bad_number?(number)
+  number.length < 10 || number.length > 11 || (number.length == 11 && number[0] != '1')
+end
+
 puts 'Event Manager Initialized!'
 
 contents = CSV.open('event_attendees.csv', headers: true, header_converters: :symbol)
 
-template_letter = File.read('form_letter.erb')
-erb_template = ERB.new template_letter
+# template_letter = File.read('form_letter.erb')
+# erb_template = ERB.new template_letter
 
 contents.each do |row|
-  id = row[0]
+  # id = row[0]
   name = row[:first_name]
-  zipcode = clean_zipcode(row[:zipcode])
-  legislators = legislators_by_zipcode(zipcode)
-  form_letter = erb_template.result(binding)
-
-  save_thank_you_letter(id, form_letter)
+  # zipcode = clean_zipcode(row[:zipcode])
+  # legislators = legislators_by_zipcode(zipcode)
+  # form_letter = erb_template.result(binding)
+  # save_thank_you_letter(id, form_letter)
+  phone_number = clean_phone_number(row[:homephone])
+  puts "#{name} : #{phone_number} || #{phone_number.length}"
 end
