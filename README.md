@@ -14,3 +14,4 @@ Get hands-on-experience in the ruby language while learning the basic concepts o
 * [Bubble Sort](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/bubble_sort)
 * [Tic Tac Toe](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/tic_tac_toe)
 * [Mastermind](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/mastermind)
+* [Event Manager](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/event_manager)
