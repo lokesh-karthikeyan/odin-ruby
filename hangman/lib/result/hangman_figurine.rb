@@ -17,9 +17,9 @@ module HangmanFigurine
     puts '      |      |'.color(:steel_blue)
   end
 
-  def figurine_footer(color = :steel_blue)
-    puts '             |'.color(:steel_blue)
-    puts '  ==============='.color(color)
+  def figurine_footer
+    puts '   |‾‾‾‾‾|'.color(:cyan) + '   |'.color(:steel_blue)
+    puts '  ==============='.color(:steel_blue)
   end
 
   def figurine_face
@@ -95,6 +95,7 @@ module HangmanFigurine
   def figurine0
     figurine_header
     figurine_full_body(:red)
-    figurine_footer(:red)
+    puts '             |'.color(:steel_blue)
+    puts '  ==============='.color(:red)
   end
 end
