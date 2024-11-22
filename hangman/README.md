@@ -21,6 +21,10 @@ The object of hangman is to guess the secret word before the **stick figure is h
 
 
 
+https://github.com/user-attachments/assets/0ef3a867-178b-4ec3-b3c1-182e12281643
+
+
+
 ## Features
 
 - As this project is to work with *File Serialization*, the game can be **saved** whenever the player types `save`.
