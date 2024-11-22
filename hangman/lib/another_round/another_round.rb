@@ -17,6 +17,7 @@ class AnotherRound
     private
 
     def enquire_choice
+      puts "\n============================================================".color(:red)
       puts ''
       puts 'Do you wanna play another round?'.color(:cyan)
       print "Press 'Y' for #{'YES'.color(:green)}".color(:cyan)
