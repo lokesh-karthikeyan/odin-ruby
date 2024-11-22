@@ -51,7 +51,7 @@ class Guess
 
   def print_choice_exist(character)
     puts ''
-    print "The entered character #{character.color(:green)}".color(:red)
+    print "The entered character #{character.upcase.color(:green)}".color(:red)
     puts ' has already entered. Please choose another one.'.color(:red)
     enquire_guess
   end
