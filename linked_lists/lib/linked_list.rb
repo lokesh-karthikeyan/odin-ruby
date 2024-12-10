@@ -3,6 +3,8 @@
 require_relative 'node'
 
 # This Class manages the 'Linked List' data structure & performs list related operations.
+
+# rubocop:disable Metrics/ClassLength
 class LinkedList
   private
 
@@ -28,6 +30,20 @@ class LinkedList
       current_node = current_node.next_node
     end
     list << 'nil'
+  end
+
+  def previous_and_current_nodes(index)
+    count = 0
+    previous_node = nil
+    current_node = front
+
+    until current_node.nil?
+      return [previous_node, current_node] if count.eql?(index)
+
+      previous_node = current_node
+      current_node = current_node.next_node
+      count += 1
+    end
   end
 
   public
@@ -127,7 +143,22 @@ class LinkedList
 
     'nil'
   end
+
+  def insert_at(value, index)
+    if index.between?(1, size - 1)
+      previous_node, current_node = previous_and_current_nodes(index)
+      new_node = node.new(value, current_node)
+      previous_node.next_node = new_node
+    end
+
+    prepend(value) if index.eql?(0)
+    append(value) if index.eql?(size)
+    return 'nil' if index.negative? || index > size
+
+    self
+  end
 end
+# rubocop:enable Metrics/ClassLength
 
 list = LinkedList.new
 
@@ -150,3 +181,8 @@ puts list.contains?('cat')
 
 puts list.find('raccoon')
 puts list.find('cat')
+
+puts list.insert_at('elephant', 0)
+puts list.insert_at('bear', 5)
+puts list.insert_at('frog', -2)
+puts list.insert_at('squirrel', 23)
