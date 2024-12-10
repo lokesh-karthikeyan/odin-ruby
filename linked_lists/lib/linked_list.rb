@@ -89,6 +89,18 @@ class LinkedList
 
     'nil'
   end
+
+  def pop
+    current_node = front
+
+    current_node = current_node.next_node until current_node.next_node.eql?(rear)
+
+    value = current_node.next_node.value
+    current_node.next_node = nil
+    @rear = current_node
+
+    value
+  end
 end
 
 list = LinkedList.new
@@ -105,3 +117,5 @@ puts list.head
 puts list.tail
 puts "The element is '#{list.at(5)}'"
 puts "The element is '#{list.at(0)}'"
+puts list.pop
+puts list
