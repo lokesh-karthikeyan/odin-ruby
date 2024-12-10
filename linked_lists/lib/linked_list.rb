@@ -46,6 +46,12 @@ class LinkedList
     end
   end
 
+  def move_front
+    value = head
+    @front = front.next_node
+    value
+  end
+
   public
 
   def append(value)
@@ -157,6 +163,20 @@ class LinkedList
 
     self
   end
+
+  def remove_at(index)
+    return move_front if index.zero?
+    return pop if index.eql?(size - 1)
+
+    return 'nil' if index.negative? || index >= size
+
+    return unless index.between?(1, size - 2)
+
+    previous_node, current_node = previous_and_current_nodes(index)
+    value = current_node.value
+    previous_node.next_node = current_node.next_node
+    value
+  end
 end
 # rubocop:enable Metrics/ClassLength
 
@@ -186,3 +206,20 @@ puts list.insert_at('elephant', 0)
 puts list.insert_at('bear', 5)
 puts list.insert_at('frog', -2)
 puts list.insert_at('squirrel', 23)
+
+puts list.remove_at(0)
+puts list
+puts list.remove_at(-1)
+puts list
+puts list.remove_at(90)
+puts list
+puts list.remove_at(3)
+puts list
+puts list.remove_at(3)
+puts list
+puts list.remove_at(1)
+puts list
+puts list.remove_at(0)
+puts list
+puts list.remove_at(0)
+puts list
