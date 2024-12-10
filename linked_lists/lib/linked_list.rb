@@ -113,6 +113,20 @@ class LinkedList
 
     false
   end
+
+  def find(value)
+    current_node = front
+    index = 0
+
+    until current_node.nil?
+      return index if current_node.value.eql?(value)
+
+      index += 1
+      current_node = current_node.next_node
+    end
+
+    'nil'
+  end
 end
 
 list = LinkedList.new
@@ -133,3 +147,6 @@ puts list.pop
 puts list
 puts list.contains?('raccoon')
 puts list.contains?('cat')
+
+puts list.find('raccoon')
+puts list.find('cat')
