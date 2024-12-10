@@ -14,6 +14,12 @@ class LinkedList
     self.tail = nil
   end
 
+  def add_first_node(value)
+    new_node = node.new(value)
+    @head = new_node
+    @tail = new_node
+  end
+
   def to_s
     current_node = @head
     list = ''
@@ -27,29 +33,25 @@ class LinkedList
   public
 
   def append(value)
-    new_node = node.new(value)
-
     unless tail.nil?
+      new_node = node.new(value)
       @tail.next_node = new_node
       @tail = new_node
       return
     end
 
-    @head = new_node
-    @tail = new_node
+    add_first_node(value)
   end
 
   def prepend(value)
-    new_node = node.new(value)
-
     unless head.nil?
+      new_node = node.new(value)
       new_node.next_node = head
       @head = new_node
       return
     end
 
-    @head = new_node
-    @tail = new_node
+    add_first_node(value)
   end
 end
 
