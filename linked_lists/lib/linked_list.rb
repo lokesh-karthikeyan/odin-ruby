@@ -53,6 +53,16 @@ class LinkedList
 
     add_first_node(value)
   end
+
+  def size
+    length = 0
+    current_node = head
+    until current_node.nil?
+      length += 1
+      current_node = current_node.next_node
+    end
+    length
+  end
 end
 
 list = LinkedList.new
@@ -61,5 +71,7 @@ list.append('dog')
 list.append('cat')
 list.prepend('parrot')
 list.prepend('hamster')
+list.append('snake')
 
 puts list
+puts list.size
