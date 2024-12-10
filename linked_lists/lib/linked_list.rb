@@ -38,11 +38,26 @@ class LinkedList
     @head = new_node
     @tail = new_node
   end
+
+  def prepend(value)
+    new_node = node.new(value)
+
+    unless head.nil?
+      new_node.next_node = head
+      @head = new_node
+      return
+    end
+
+    @head = new_node
+    @tail = new_node
+  end
 end
 
 list = LinkedList.new
 
 list.append('dog')
 list.append('cat')
+list.prepend('parrot')
+list.prepend('hamster')
 
 puts list
