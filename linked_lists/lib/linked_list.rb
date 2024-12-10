@@ -6,22 +6,22 @@ require_relative 'node'
 class LinkedList
   private
 
-  attr_accessor :head, :tail, :node
+  attr_accessor :front, :rear, :node
 
   def initialize(node = Node)
     self.node = node
-    self.head = nil
-    self.tail = nil
+    self.front = nil
+    self.rear = nil
   end
 
   def add_first_node(value)
     new_node = node.new(value)
-    @head = new_node
-    @tail = new_node
+    @front = new_node
+    @rear = new_node
   end
 
   def to_s
-    current_node = @head
+    current_node = @front
     list = ''
     until current_node.nil?
       list << "( #{current_node.value} ) -> "
@@ -33,10 +33,10 @@ class LinkedList
   public
 
   def append(value)
-    unless tail.nil?
+    unless rear.nil?
       new_node = node.new(value)
-      @tail.next_node = new_node
-      @tail = new_node
+      @rear.next_node = new_node
+      @rear = new_node
       return
     end
 
@@ -44,10 +44,10 @@ class LinkedList
   end
 
   def prepend(value)
-    unless head.nil?
+    unless front.nil?
       new_node = node.new(value)
-      new_node.next_node = head
-      @head = new_node
+      new_node.next_node = front
+      @front = new_node
       return
     end
 
@@ -56,7 +56,7 @@ class LinkedList
 
   def size
     length = 0
-    current_node = head
+    current_node = front
     until current_node.nil?
       length += 1
       current_node = current_node.next_node
