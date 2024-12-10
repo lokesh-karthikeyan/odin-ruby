@@ -101,6 +101,18 @@ class LinkedList
 
     value
   end
+
+  def contains?(value)
+    current_node = front
+
+    until current_node.nil?
+      return true if current_node.value.eql?(value)
+
+      current_node = current_node.next_node
+    end
+
+    false
+  end
 end
 
 list = LinkedList.new
@@ -119,3 +131,5 @@ puts "The element is '#{list.at(5)}'"
 puts "The element is '#{list.at(0)}'"
 puts list.pop
 puts list
+puts list.contains?('raccoon')
+puts list.contains?('cat')
