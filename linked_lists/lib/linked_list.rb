@@ -63,6 +63,32 @@ class LinkedList
     end
     length
   end
+
+  def head
+    return front.value if front
+
+    'nil'
+  end
+
+  def tail
+    return rear.value if rear
+
+    'nil'
+  end
+
+  def at(index)
+    current_node = front
+    count = 0
+
+    until current_node.nil?
+      return current_node.value if count.eql?(index)
+
+      count += 1
+      current_node = current_node.next_node
+    end
+
+    'nil'
+  end
 end
 
 list = LinkedList.new
@@ -75,3 +101,7 @@ list.append('snake')
 
 puts list
 puts list.size
+puts list.head
+puts list.tail
+puts "The element is '#{list.at(5)}'"
+puts "The element is '#{list.at(0)}'"
