@@ -25,10 +25,12 @@ class LinkedList
   def to_s
     current_node = @front
     list = ''
+
     until current_node.nil?
       list << "( #{current_node.value} ) -> "
       current_node = current_node.next_node
     end
+
     list << 'nil'
   end
 
@@ -52,37 +54,47 @@ class LinkedList
     value
   end
 
+  def insert_between(value, index)
+    previous_node, current_node = previous_and_current_nodes(index)
+    new_node = node.new(value, current_node)
+    previous_node.next_node = new_node
+    nil
+  end
+
+  def remove_between(index)
+    previous_node, current_node = previous_and_current_nodes(index)
+    value = current_node.value
+    previous_node.next_node = current_node.next_node
+    value
+  end
+
   public
 
   def append(value)
-    unless rear.nil?
-      new_node = node.new(value)
-      @rear.next_node = new_node
-      @rear = new_node
-      return
-    end
+    return add_first_node(value) if rear.nil?
 
-    add_first_node(value)
+    new_node = node.new(value)
+    @rear.next_node = new_node
+    @rear = new_node
   end
 
   def prepend(value)
-    unless front.nil?
-      new_node = node.new(value)
-      new_node.next_node = front
-      @front = new_node
-      return
-    end
+    return add_first_node(value) if front.nil?
 
-    add_first_node(value)
+    new_node = node.new(value)
+    new_node.next_node = front
+    @front = new_node
   end
 
   def size
     length = 0
     current_node = front
+
     until current_node.nil?
       length += 1
       current_node = current_node.next_node
     end
+
     length
   end
 
@@ -151,12 +163,7 @@ class LinkedList
   end
 
   def insert_at(value, index)
-    if index.between?(1, size - 1)
-      previous_node, current_node = previous_and_current_nodes(index)
-      new_node = node.new(value, current_node)
-      previous_node.next_node = new_node
-    end
-
+    insert_between(value, index) if index.between?(1, size - 1)
     prepend(value) if index.eql?(0)
     append(value) if index.eql?(size)
     return 'nil' if index.negative? || index > size
@@ -165,61 +172,37 @@ class LinkedList
   end
 
   def remove_at(index)
-    return move_front if index.zero?
+    return remove_between(index) if index.between?(1, size - 2)
+    return move_front if index.zero? && size.positive?
     return pop if index.eql?(size - 1)
 
-    return 'nil' if index.negative? || index >= size
-
-    return unless index.between?(1, size - 2)
-
-    previous_node, current_node = previous_and_current_nodes(index)
-    value = current_node.value
-    previous_node.next_node = current_node.next_node
-    value
+    'nil' if index.negative? || index >= size
   end
 end
 # rubocop:enable Metrics/ClassLength
 
 list = LinkedList.new
 
+puts list.remove_at(100)
 list.append('dog')
-list.append('cat')
-list.prepend('parrot')
-list.prepend('hamster')
-list.append('snake')
-
+list.prepend('cat')
 puts list
-puts list.size
-puts list.head
-puts list.tail
-puts "The element is '#{list.at(5)}'"
-puts "The element is '#{list.at(0)}'"
-puts list.pop
+puts "The size of the list is = #{list.size}"
+list.insert_at('elephant', 4)
+list.insert_at('elephant', 1)
 puts list
-puts list.contains?('raccoon')
-puts list.contains?('cat')
-
-puts list.find('raccoon')
-puts list.find('cat')
-
-puts list.insert_at('elephant', 0)
-puts list.insert_at('bear', 5)
-puts list.insert_at('frog', -2)
-puts list.insert_at('squirrel', 23)
-
-puts list.remove_at(0)
+puts "The first node element is = #{list.head}"
+puts "The last node element is = #{list.tail}"
+puts "The element in index '5' is #{list.at(5)}"
+puts "The element in index '2' is #{list.at(2)}"
+list.insert_at('parrot', 3)
 puts list
-puts list.remove_at(-1)
+list.pop
 puts list
-puts list.remove_at(90)
-puts list
-puts list.remove_at(3)
-puts list
-puts list.remove_at(3)
-puts list
-puts list.remove_at(1)
-puts list
-puts list.remove_at(0)
-puts list
-puts list.remove_at(0)
+puts "Does list has 'cat'? : #{list.contains?('cat')}"
+puts "Does list has 'parrot'? : #{list.contains?('parrot')}"
+puts "Locate 'parrot' from the list : #{list.find('parrot')}"
+puts "Locate 'cat' from the list : #{list.find('cat')}"
+list.remove_at(99)
+list.remove_at(1)
 puts list
