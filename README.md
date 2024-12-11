@@ -17,3 +17,4 @@ Get hands-on-experience in the ruby language while learning the basic concepts o
 * [Event Manager](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/event_manager)
 * [Hangman](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/hangman)
 * [Recursion](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/recursion)
+* [Linked Lists](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/linked_lists)
