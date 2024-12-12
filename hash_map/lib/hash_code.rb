@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This Class creates hash from the passed in string as an argument.
-class Hash
+class HashCode
   private
 
   PRIME_NUMBER = 31
