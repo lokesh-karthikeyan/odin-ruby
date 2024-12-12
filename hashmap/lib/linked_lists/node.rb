@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-# This Class creates a node for a linked list. (Contains data & the pointer to next node)
+# This Class creates a node for a linked list. (Contains key, value & the pointer to next node)
 class Node
   private
 
-  def initialize(value = nil, next_node = nil)
+  def initialize(key = nil, value = nil, next_node = nil)
+    self.key = key
     self.value = value
     self.next_node = next_node
   end
 
   public
 
-  attr_accessor :value, :next_node
+  attr_accessor :key, :value, :next_node
 end
