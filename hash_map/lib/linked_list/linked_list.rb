@@ -7,15 +7,36 @@ require_relative 'node'
 class LinkedList
   private
 
-  attr_accessor :front, :rear
+  attr_accessor :tail
 
   def initialize(node = Node)
     @node = node
-    self.front = nil
-    self.rear = nil
+    self.tail = []
   end
 
   def create_node(key = nil, value = nil, next_node = nil)
     @node.new(key, value, next_node)
+  end
+
+  def append_first_node(index, key, value)
+    new_node = create_node(key, value)
+    pointer[index] = new_node
+    tail[index] = new_node
+  end
+
+  def append_node(index, key, value)
+    new_node = create_node(key, value)
+    tail[index].next_node = new_node
+    tail[index] = new_node
+  end
+
+  public
+
+  attr_accessor :pointer
+
+  def add(index, key, value)
+    return append_first_node(index, key, value) if pointer[index].nil?
+
+    append_node(index, key, value) if pointer[index]
   end
 end
