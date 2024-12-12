@@ -39,4 +39,16 @@ class LinkedList
 
     append_node(index, key, value) if pointer[index]
   end
+
+  def pull_value(index, key)
+    current_node = pointer[index]
+
+    until current_node.nil?
+      return current_node.value if current_node.key == key
+
+      current_node = current_node.next_node
+    end
+
+    'nil'
+  end
 end
