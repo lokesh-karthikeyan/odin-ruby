@@ -51,4 +51,16 @@ class LinkedList
 
     'nil'
   end
+
+  def valid_key?(index, key)
+    current_node = pointer[index]
+
+    until current_node.nil?
+      return true if current_node.key == key
+
+      current_node = current_node.next_node
+    end
+
+    false
+  end
 end
