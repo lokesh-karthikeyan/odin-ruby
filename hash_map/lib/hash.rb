@@ -7,7 +7,7 @@ class Hash
   PRIME_NUMBER = 31
   attr_accessor :key
 
-  def initialize(key)
+  def initialize(key = nil)
     self.key = key
   end
 
