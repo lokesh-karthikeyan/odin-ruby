@@ -37,6 +37,16 @@ class HashMap
     add(index, key, value)
   end
 
+  def remove(key)
+    index = compute_index(key)
+
+    return nil unless entries.map(&:first).include?(key)
+
+    return delete_first_node(index) if bucket[index].next_node.nil?
+
+    delete_node(index, key)
+  end
+
   def entries
     key_value_pairs = []
 
@@ -61,7 +71,8 @@ my_hash.set('jacket', 'blue')
 my_hash.set('kite', 'pink')
 my_hash.set('lion', 'golden')
 
-# p my_hash.length
+p my_hash.remove('kitee')
+p my_hash.remove('kite')
 # puts my_hash.get('lionn')
 # puts my_hash.get('kite')
 #
