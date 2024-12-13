@@ -52,7 +52,11 @@ class HashMap
     is_present = nil
     current_node = bucket[index]
 
-    traverse_nodes(current_node) { return is_present = current_node.value if current_node.key == key }
+    while current_node
+      return is_present = current_node.value if current_node.key == key
+
+      current_node = current_node.next_node
+    end
     is_present
   end
 
@@ -85,6 +89,15 @@ class HashMap
       end
     end
   end
+
+  def test
+    p "Bucket size = #{bucket.length}"
+    p "Load Levels = #{load_levels}"
+    p "Entries Length = #{length}"
+    indices = []
+    bucket.each_with_index { |item, index| indices << index if item }
+    p "Non-nil indices: #{indices}"
+  end
 end
 
 my_hash = HashMap.new
@@ -102,44 +115,55 @@ my_hash.set('jacket', 'blue')
 my_hash.set('kite', 'pink')
 my_hash.set('lion', 'golden')
 
-p "Entries = #{my_hash.length}"
+my_hash.test
 # p my_hash.entries
 
-my_hash.set('hat', 'black')
-my_hash.set('lion', 'golden')
-my_hash.set('hat', 'black')
-my_hash.set('lion', 'golden')
-my_hash.set('hat', 'black')
-my_hash.set('lion', 'golden')
-my_hash.set('hat', 'black')
-my_hash.set('lion', 'golden')
-my_hash.set('hat', 'black')
-my_hash.set('lion', 'golden')
-my_hash.set('hat', 'black')
-my_hash.set('lion', 'golden')
-my_hash.set('hat', 'black')
-my_hash.set('lion', 'golden')
-my_hash.set('kite', 'pinkkkkkkkkkkkkkk')
-my_hash.set('jacket', 'black')
+# my_hash.set('apple', 'redddd')
+# my_hash.set('banana', 'yellowwww')
+# my_hash.set('carrot', 'orangeeee')
+# my_hash.set('dog', 'brownnn')
+# my_hash.set('elephant', 'grayyyyy')
+# my_hash.set('frog', 'greennnnnn')
+# my_hash.set('grape', 'purpleeeee')
+# my_hash.set('hat', 'blackkkkk')
+# my_hash.set('ice cream', 'whiteeeeee')
+# my_hash.set('jacket', 'blueee')
+# my_hash.set('kite', 'pinkkkkkkk')
+# my_hash.set('lion', 'goldennnn')
 
-p "Entries = #{my_hash.length}"
+my_hash.set('moon', 'silver')
+
+# my_hash.test
 # p my_hash.entries
 
+my_hash.set('kite', 'crimson')
+my_hash.set('sun', 'crimson')
+my_hash.set('space', 'black')
+my_hash.test
+
+# p my_hash.entries
 # p my_hash.has?('lion')
 # p my_hash.remove('kitee')
 # p my_hash.remove('kite')
 #
-# p my_hash.get('lionn')
-# p my_hash.get('carrot')
-#
-# p my_hash.has?('carrot')
-# p my_hash.has?('bear')
-#
-# p my_hash.length
-#
-# p my_hash.entries
+p my_hash.get('lionn')
+p my_hash.get('carrot')
+
+p my_hash.has?('carrot')
+p my_hash.has?('bear')
+p my_hash.has?('space')
+
+p my_hash.keys
+p my_hash.values
+
+p my_hash.remove('lion')
+
+p my_hash.keys
+p my_hash.values
+p my_hash.entries
 #
 # my_hash.clear
+p my_hash.remove('lion')
 #
 # p my_hash.entries
 #
