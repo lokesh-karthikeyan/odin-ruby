@@ -23,12 +23,14 @@ module LinkedList
     new_node = create_node(key, value)
     bucket[index] = new_node
     tail[index] = new_node
+    increase_length
   end
 
   def append_node(index, key, value)
     new_node = create_node(key, value)
     tail[index].next_node = new_node
     tail[index] = new_node
+    increase_length
   end
 
   def replace_node_value(index, key, value)
@@ -45,8 +47,7 @@ module LinkedList
 
   def add(index, key, value)
     return append_first_node(index, key, value) if bucket[index].nil?
-
-    # return replace_node_value(index, key, value) if has?(key)
+    return replace_node_value(index, key, value) if has?(key)
 
     append_node(index, key, value)
   end
@@ -55,6 +56,7 @@ module LinkedList
     value = bucket[index].value
 
     bucket[index] = nil
+    decrease_length
     value
   end
 
@@ -64,6 +66,7 @@ module LinkedList
     current_node = current_node.next_node until current_node.next_node.key == key
     value = current_node.next_node.value
     current_node.next_node = current_node.next_node.next_node
+    decrease_length
     value
   end
 
