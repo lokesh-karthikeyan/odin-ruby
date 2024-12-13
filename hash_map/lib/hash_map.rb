@@ -19,6 +19,7 @@ class HashMap
     self.bucket_stash = bucket_stash
     self.bucket = bucket_stash.store
     self.tail = []
+    self.length = 0
   end
 
   def compute_index(key)
@@ -28,7 +29,13 @@ class HashMap
 
   def invalid_index?(index) = index.negative? || index >= bucket.length
 
+  def increase_length = self.length += 1
+
+  def decrease_length = self.length -= 1
+
   public
+
+  attr_accessor :length
 
   def set(key, value)
     index = compute_index(key)
@@ -89,3 +96,5 @@ p my_hash.get('carrot')
 
 p my_hash.has?('carrot')
 p my_hash.has?('bear')
+
+p my_hash.length
