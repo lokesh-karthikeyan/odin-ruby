@@ -69,6 +69,10 @@ class HashMap
     self.length = 0
   end
 
+  def keys = entries.map(&:first)
+
+  def values = entries.map(&:last)
+
   def entries
     key_value_pairs = []
 
@@ -126,4 +130,6 @@ my_hash.set('kite', 'pink')
 my_hash.set('lion', 'golden')
 p my_hash.length
 
-p my_hash.entries
+# p my_hash.entries
+p my_hash.keys
+p my_hash.values
