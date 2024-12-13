@@ -64,6 +64,11 @@ class HashMap
     delete_node(index, key)
   end
 
+  def clear
+    bucket.each_index { |index| bucket[index] = nil }
+    self.length = 0
+  end
+
   def entries
     key_value_pairs = []
 
@@ -98,3 +103,27 @@ p my_hash.has?('carrot')
 p my_hash.has?('bear')
 
 p my_hash.length
+
+p my_hash.entries
+
+my_hash.clear
+
+p my_hash.entries
+
+p my_hash.length
+
+my_hash.set('apple', 'red')
+my_hash.set('banana', 'yellow')
+my_hash.set('carrot', 'orange')
+my_hash.set('dog', 'brown')
+my_hash.set('elephant', 'gray')
+my_hash.set('frog', 'green')
+my_hash.set('grape', 'purple')
+my_hash.set('hat', 'black')
+my_hash.set('ice cream', 'white')
+my_hash.set('jacket', 'blue')
+my_hash.set('kite', 'pink')
+my_hash.set('lion', 'golden')
+p my_hash.length
+
+p my_hash.entries
