@@ -74,11 +74,12 @@ class HashMap
   def values = entries.map(&:last)
 
   def entries
-    key_value_pairs = []
-
-    bucket.each { |item| traverse_nodes(item) { key_value_pairs << [item.key, item.value] } if item }
-
-    key_value_pairs
+    bucket.each_with_object([]) do |item, entry_list|
+      while item
+        entry_list << [item.key, item.value]
+        item = item.next_node
+      end
+    end
   end
 end
 
