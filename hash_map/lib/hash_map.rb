@@ -46,11 +46,12 @@ class HashMap
     is_present
   end
 
+  def has?(key) = !!get(key)
+
   def remove(key)
     index = compute_index(key)
 
-    return nil unless entries.map(&:first).include?(key)
-
+    return nil unless has?(key)
     return delete_first_node(index) if bucket[index].next_node.nil?
 
     delete_node(index, key)
@@ -85,6 +86,6 @@ p my_hash.remove('kite')
 
 p my_hash.get('lionn')
 p my_hash.get('carrot')
-#
-# puts my_hash.has?('carrot')
-# puts my_hash.has?('bear')
+
+p my_hash.has?('carrot')
+p my_hash.has?('bear')
