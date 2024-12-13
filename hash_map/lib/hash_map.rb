@@ -60,7 +60,8 @@ class HashMap
   end
 
   def clear
-    bucket.each_index { |index| bucket[index] = nil }
+    self.bucket_stash = bucket_stash.new_stash
+    self.bucket = bucket_stash.store
     self.length = 0
   end
 
@@ -129,3 +130,7 @@ p my_hash.length
 # p my_hash.entries
 p my_hash.keys
 p my_hash.values
+
+my_hash.clear
+
+p my_hash.entries
