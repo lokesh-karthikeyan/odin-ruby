@@ -37,6 +37,15 @@ class HashMap
     add(index, key, value)
   end
 
+  def get(key)
+    index = compute_index(key)
+    is_present = nil
+    current_node = bucket[index]
+
+    traverse_nodes(current_node) { return is_present = current_node.value if current_node.key == key }
+    is_present
+  end
+
   def remove(key)
     index = compute_index(key)
 
@@ -73,8 +82,9 @@ my_hash.set('lion', 'golden')
 
 p my_hash.remove('kitee')
 p my_hash.remove('kite')
-# puts my_hash.get('lionn')
-# puts my_hash.get('kite')
+
+p my_hash.get('lionn')
+p my_hash.get('carrot')
 #
 # puts my_hash.has?('carrot')
 # puts my_hash.has?('bear')
