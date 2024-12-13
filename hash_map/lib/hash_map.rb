@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'hash_code'
+require_relative 'hash_indexable'
 require_relative 'buckets'
 require_relative 'linked_list'
 
@@ -8,23 +8,18 @@ require_relative 'linked_list'
 class HashMap
   private
 
+  include HashIndexable
   include LinkedList
 
   LOAD_FACTOR = 0.75
 
-  attr_accessor :hash_code, :bucket_stash, :bucket, :tail
+  attr_accessor :bucket_stash, :bucket, :tail
 
-  def initialize(hash_code = HashCode.new, bucket_stash = Buckets.new)
-    self.hash_code = hash_code
+  def initialize(bucket_stash = Buckets.new)
     self.bucket_stash = bucket_stash
     self.bucket = bucket_stash.store
     self.tail = []
     self.length = 0
-  end
-
-  def compute_index(key)
-    key = hash_code.generate(key)
-    key % 16
   end
 
   def invalid_index?(index) = index.negative? || index >= bucket.length
