@@ -17,4 +17,8 @@ class Buckets
     store.each_with_index { |value, index| new_storage[index] = value }
     @store = new_storage
   end
+
+  def new_stash
+    self.class.new
+  end
 end
