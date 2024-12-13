@@ -45,8 +45,32 @@ module LinkedList
 
   def add(index, key, value)
     return append_first_node(index, key, value) if bucket[index].nil?
-    return replace_node_value(index, key, value) if has?(key)
+
+    # return replace_node_value(index, key, value) if has?(key)
 
     append_node(index, key, value)
+  end
+
+  def delete_first_node(index)
+    value = bucket[index].value
+
+    bucket[index] = nil
+    value
+  end
+
+  def delete_node(index, key)
+    current_node = bucket[index]
+
+    current_node = current_node.next_node until current_node.next_node.key == key
+    value = current_node.next_node.value
+    current_node.next_node = current_node.next_node.next_node
+    value
+  end
+
+  def traverse_nodes(node, &block)
+    while node
+      block.call
+      node = node.next_node
+    end
   end
 end
