@@ -2,22 +2,23 @@
 
 require_relative 'hash_code'
 require_relative 'buckets'
-require_relative 'linked_list/linked_list'
+require_relative 'linked_list'
 
 # This Class creates an instance of 'Hash Map' data structure and performs hash operations.
 class HashMap
   private
 
+  include LinkedList
+
   LOAD_FACTOR = 0.75
 
-  attr_accessor :hash_code, :bucket_stash, :bucket, :list
+  attr_accessor :hash_code, :bucket_stash, :bucket, :tail
 
-  def initialize(hash_code = HashCode.new, bucket_stash = Buckets.new, list = LinkedList.new)
+  def initialize(hash_code = HashCode.new, bucket_stash = Buckets.new)
     self.hash_code = hash_code
     self.bucket_stash = bucket_stash
     self.bucket = bucket_stash.store
-    self.list = list
-    self.list.pointer = bucket
+    self.tail = []
   end
 
   def compute_index(key)
@@ -33,7 +34,15 @@ class HashMap
     index = compute_index(key)
     raise IndexError if invalid_index?(index)
 
-    list.add(index, key, value)
+    add(index, key, value)
+  end
+
+  def entries
+    key_value_pairs = []
+
+    bucket.each { |item| traverse_nodes(item) { key_value_pairs << [item.key, item.value] } if item }
+
+    key_value_pairs
   end
 end
 
@@ -51,3 +60,10 @@ my_hash.set('ice cream', 'white')
 my_hash.set('jacket', 'blue')
 my_hash.set('kite', 'pink')
 my_hash.set('lion', 'golden')
+
+# p my_hash.length
+# puts my_hash.get('lionn')
+# puts my_hash.get('kite')
+#
+# puts my_hash.has?('carrot')
+# puts my_hash.has?('bear')
