@@ -43,6 +43,16 @@ class HashMap
     increase_buckets if load_exceeded?
     add(index, key, value)
   end
+
+  def get(key)
+    index = hash_index(key)
+    head_node = bucket[index]
+    return nil unless head_node
+
+    find_value(head_node, key)
+  end
+
+  def has?(key) = !!get(key)
 end
 
 hash = HashMap.new
@@ -51,3 +61,9 @@ p hash.set('apple', 'red')
 p hash.set('banana', 'yellow')
 p hash.set('banana', 'yyellow')
 p hash.length
+
+p hash.get('appleee')
+p hash.get('banana')
+
+p hash.has?('app')
+p hash.has?('banana')
