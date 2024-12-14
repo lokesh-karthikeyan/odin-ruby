@@ -49,4 +49,27 @@ module SetOperations
 
     false
   end
+
+  def delete_head_node(index)
+    key_copy = bucket[index].key
+    bucket[index] = bucket[index].next_node || nil
+    decrease_length
+    key_copy
+  end
+
+  def delete_node(index, key)
+    current_node = bucket[index]
+
+    current_node = current_node.next_node until current_node.next_node.key == key
+    key_copy = current_node.next_node.key
+    current_node.next_node = current_node.next_node.next_node
+    decrease_length
+    key_copy
+  end
+
+  def delete(index, key)
+    return delete_head_node(index) if bucket[index].key == key
+
+    delete_node(index, key)
+  end
 end
