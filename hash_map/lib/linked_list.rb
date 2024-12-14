@@ -69,11 +69,4 @@ module LinkedList
     decrease_length
     value
   end
-
-  def traverse_nodes(node, &block)
-    while node
-      block.call
-      node = node.next_node
-    end
-  end
 end
