@@ -14,7 +14,5 @@ module HashIndexable
     end
   end
 
-  DIVISOR = 16
-
-  def compute_index(key) = HashCode.new.generate(key) % DIVISOR
+  def compute_index(key) = HashCode.new.generate(key) % bucket.length
 end
