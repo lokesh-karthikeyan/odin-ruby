@@ -52,6 +52,13 @@ class HashSet
     find_entry(head_node, key)
   end
 
+  def remove(key)
+    index = hash_index(key)
+    return nil unless has?(key)
+
+    delete(index, key)
+  end
+
   def keys
     bucket.each_with_object([]) do |node, key_list|
       while node
@@ -64,12 +71,19 @@ end
 
 hash = HashSet.new
 
-p hash.set('apple')
-p hash.set('banana')
-p hash.set('banana')
-p hash.length
+hash.set('apple')
+hash.set('banana')
+hash.set('carrot')
+hash.set('dog')
+hash.set('elephant')
+hash.set('frog')
+hash.set('grape')
+hash.set('hat')
+hash.set('ice cream')
+hash.set('jacket')
+hash.set('kite')
+hash.set('lion')
 
-p hash.keys
-
-p hash.has?('apple')
-p hash.has?('app')
+p '***********'
+p hash.remove('appl')
+p hash.remove('elephant')
