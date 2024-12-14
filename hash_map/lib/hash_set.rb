@@ -43,11 +43,22 @@ class HashSet
     increase_buckets if load_exceeded?
     add(index, key)
   end
+
+  def keys
+    bucket.each_with_object([]) do |node, key_list|
+      while node
+        key_list << node.key
+        node = node.next_node
+      end
+    end
+  end
 end
 
-hash_set = HashSet.new
+hash = HashSet.new
 
-p hash_set.set('apple')
-p hash_set.set('banana')
-p hash_set.set('banana')
-p hash_set.length
+p hash.set('apple')
+p hash.set('banana')
+p hash.set('banana')
+p hash.length
+
+p hash.keys
