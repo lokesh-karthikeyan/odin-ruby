@@ -34,9 +34,27 @@ module MapOperations
     [new_node.key, new_node.value]
   end
 
+  def replace_node(index, key, value)
+    current_node = bucket[index]
+    current_node = current_node.next_node until current_node.key == key
+    current_node.value = value
+    [current_node.key, current_node.value]
+  end
+
   def add(index, key, value)
+    return replace_node(index, key, value) if has?(key)
     return append_node(index, key, value) if bucket[index]
 
     insert_node(index, key, value)
+  end
+
+  def find_value(node, key)
+    while node
+      return node.value if node.key == key
+
+      node = node.next_node
+    end
+
+    nil
   end
 end
