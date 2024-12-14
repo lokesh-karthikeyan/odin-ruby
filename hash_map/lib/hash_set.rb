@@ -59,6 +59,11 @@ class HashSet
     delete(index, key)
   end
 
+  def clear
+    self.bucket = buckets.new
+    self.length = 0
+  end
+
   def keys
     bucket.each_with_object([]) do |node, key_list|
       while node
@@ -87,3 +92,10 @@ hash.set('lion')
 p '***********'
 p hash.remove('appl')
 p hash.remove('elephant')
+
+p '***********'
+p hash.length
+
+hash.clear
+
+p hash.length

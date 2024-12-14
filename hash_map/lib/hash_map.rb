@@ -60,6 +60,11 @@ class HashMap
 
     delete(index, key)
   end
+
+  def clear
+    self.bucket = buckets.new
+    self.length = 0
+  end
 end
 
 hash = HashMap.new
@@ -80,3 +85,7 @@ hash.set('lion', 'golden')
 p '***********'
 p hash.remove('appl')
 p hash.remove('elephant')
+p '***********'
+p hash.length
+hash.clear
+p hash.length
