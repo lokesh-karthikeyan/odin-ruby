@@ -53,17 +53,30 @@ class HashMap
   end
 
   def has?(key) = !!get(key)
+
+  def remove(key)
+    index = hash_index(key)
+    return nil unless has?(key)
+
+    delete(index, key)
+  end
 end
 
 hash = HashMap.new
 
-p hash.set('apple', 'red')
-p hash.set('banana', 'yellow')
-p hash.set('banana', 'yyellow')
-p hash.length
+hash.set('apple', 'red')
+hash.set('banana', 'yellow')
+hash.set('carrot', 'orange')
+hash.set('dog', 'brown')
+hash.set('elephant', 'gray')
+hash.set('frog', 'green')
+hash.set('grape', 'purple')
+hash.set('hat', 'black')
+hash.set('ice cream', 'white')
+hash.set('jacket', 'blue')
+hash.set('kite', 'pink')
+hash.set('lion', 'golden')
 
-p hash.get('appleee')
-p hash.get('banana')
-
-p hash.has?('app')
-p hash.has?('banana')
+p '***********'
+p hash.remove('appl')
+p hash.remove('elephant')
