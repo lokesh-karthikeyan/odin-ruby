@@ -57,4 +57,27 @@ module MapOperations
 
     nil
   end
+
+  def delete_head_node(index)
+    value = bucket[index].value
+    bucket[index] = bucket[index].next_node || nil
+    decrease_length
+    value
+  end
+
+  def delete_node(index, key)
+    current_node = bucket[index]
+
+    current_node = current_node.next_node until current_node.next_node.key == key
+    value = current_node.next_node.value
+    current_node.next_node = current_node.next_node.next_node
+    decrease_length
+    value
+  end
+
+  def delete(index, key)
+    return delete_head_node(index) if bucket[index].key == key
+
+    delete_node(index, key)
+  end
 end
