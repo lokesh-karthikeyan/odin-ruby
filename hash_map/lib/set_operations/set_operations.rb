@@ -34,8 +34,19 @@ module SetOperations
   end
 
   def add(index, key)
+    return key if has?(key)
     return append_node(index, key) if bucket[index]
 
     insert_node(index, key)
+  end
+
+  def find_entry(node, key)
+    while node
+      return true if node.key == key
+
+      node = node.next_node
+    end
+
+    false
   end
 end
