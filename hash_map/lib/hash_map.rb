@@ -65,6 +65,19 @@ class HashMap
     self.bucket = buckets.new
     self.length = 0
   end
+
+  def keys = entries.map(&:first)
+
+  def values = entries.map(&:last)
+
+  def entries
+    bucket.each_with_object([]) do |node, entry_list|
+      while node
+        entry_list << [node.key, node.value]
+        node = node.next_node
+      end
+    end
+  end
 end
 
 hash = HashMap.new
@@ -87,5 +100,11 @@ p hash.remove('appl')
 p hash.remove('elephant')
 p '***********'
 p hash.length
-hash.clear
+# hash.clear
 p hash.length
+p '***********'
+p hash.keys
+p '***********'
+p hash.values
+p '***********'
+p hash.entries
