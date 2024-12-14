@@ -44,6 +44,14 @@ class HashSet
     add(index, key)
   end
 
+  def has?(key)
+    index = hash_index(key)
+    head_node = bucket[index]
+    return false unless head_node
+
+    find_entry(head_node, key)
+  end
+
   def keys
     bucket.each_with_object([]) do |node, key_list|
       while node
@@ -62,3 +70,6 @@ p hash.set('banana')
 p hash.length
 
 p hash.keys
+
+p hash.has?('apple')
+p hash.has?('app')
