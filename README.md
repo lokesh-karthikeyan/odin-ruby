@@ -18,3 +18,4 @@ Get hands-on-experience in the ruby language while learning the basic concepts o
 * [Hangman](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/hangman)
 * [Recursion](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/recursion)
 * [Linked Lists](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/linked_lists)
+* [HashMap](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/hash_map)
