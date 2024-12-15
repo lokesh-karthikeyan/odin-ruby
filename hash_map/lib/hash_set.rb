@@ -40,8 +40,8 @@ class HashSet
     index = hash_index(key)
     raise IndexError if invalid_index?(index)
 
-    increase_buckets if load_exceeded?
     add(index, key)
+    increase_buckets if load_exceeded?
   end
 
   def has?(key)
@@ -72,6 +72,15 @@ class HashSet
       end
     end
   end
+
+  def test
+    p "Load Levels = #{load_levels}"
+    p "Capacity = #{capacity}"
+    non_indices = []
+    bucket.each_with_index { |v, i| non_indices << i if v }
+    p "Occupied Indices = #{non_indices}"
+    p "Total entries = #{length}"
+  end
 end
 
 hash = HashSet.new
@@ -89,13 +98,128 @@ hash.set('jacket')
 hash.set('kite')
 hash.set('lion')
 
-p '***********'
-p hash.remove('appl')
-p hash.remove('elephant')
+hash.test
+puts '******************************************'
 
-p '***********'
+hash.set('apple')
+hash.set('banana')
+hash.set('carrot')
+hash.set('dog')
+hash.set('elephant')
+hash.set('frog')
+hash.set('grape')
+hash.set('hat')
+hash.set('ice cream')
+hash.set('jacket')
+hash.set('kite')
+hash.set('lion')
+
+hash.test
+puts '******************************************'
+
+hash.set('moon')
+hash.test
+
+puts '******************************************'
+
+hash.set('apple')
+hash.set('banana')
+hash.set('carrot')
+hash.set('dog')
+hash.set('elephant')
+hash.set('frog')
+hash.set('grape')
+hash.set('hat')
+hash.set('ice cream')
+hash.set('jacket')
+hash.set('kite')
+hash.set('lion')
+
+hash.test
+puts '******************************************'
+
+hash.set('zzapple')
+hash.set('zzbanana')
+hash.set('zzcarrot')
+hash.set('zzdog')
+hash.set('zzelephant')
+hash.set('zzfrog')
+hash.set('zzgrape')
+hash.set('zzhat')
+hash.set('zzice cream')
+hash.set('zzjacket')
+hash.set('zzkite')
+hash.set('zzlion')
+
+hash.test
+
+puts '************Has()**************************************'
+
+p hash.has?('zzelephant')
+p hash.has?('elephantt')
+p hash.has?('')
+p hash.has?('dog')
+puts '*******Remove()*******************************************'
+
+p hash.remove('zzapple')
+p hash.remove('zzbanana')
+p hash.remove('zzcarrot')
+p hash.remove('zzdog')
+p hash.remove('zzelephant')
+p hash.remove('zzfrog')
+p hash.remove('zzgrape')
+p hash.remove('zzhat')
+p hash.remove('zzice cream')
+p hash.remove('zzjacket')
+p hash.remove('zzkite')
+p hash.remove('zzlion')
+
+hash.test
+puts '*******Keys()**********************************************'
+
+p hash.keys
+
+puts '*******Length()*******************************************'
 p hash.length
-
+puts '*******Clear()*******************************************'
 hash.clear
 
-p hash.length
+hash.test
+
+puts '******************************************'
+hash.set('apple')
+hash.set('banana')
+hash.set('carrot')
+hash.set('dog')
+hash.set('elephant')
+hash.set('frog')
+hash.set('grape')
+hash.set('hat')
+hash.set('ice cream')
+hash.set('jacket')
+hash.set('kite')
+hash.set('lion')
+
+hash.test
+puts '******************************************'
+
+hash.set('apple')
+hash.set('banana')
+hash.set('carrot')
+hash.set('dog')
+hash.set('elephant')
+hash.set('frog')
+hash.set('grape')
+hash.set('hat')
+hash.set('ice cream')
+hash.set('jacket')
+hash.set('kite')
+hash.set('lion')
+
+hash.test
+puts '******************************************'
+
+hash.set('moon')
+hash.test
+
+puts '******************************************'
