@@ -4,6 +4,19 @@
 class Traverse
   def level_order(node) = rand(1..2) > 1 ? level_order_iteration(node) : level_order_recursion(node)
 
+  def inorder(node, stack = [], result = [])
+    return result if node.nil?
+
+    stack << node
+    until stack.empty?
+      node = push_nodes(node, stack, is_left: true) while node
+      popped_node = stack.pop
+      result << popped_node.value
+      node = push_nodes(popped_node, stack, is_left: false)
+    end
+    result
+  end
+
   private
 
   def level_order_iteration(node, queue = [], result = [])
@@ -27,5 +40,11 @@ class Traverse
     queue.push(node.right) if node.right
     next_node = queue.shift
     level_order_recursion(next_node, queue, result)
+  end
+
+  def push_nodes(node, stack, is_left: true)
+    node = is_left ? node.left : node.right
+    stack << node if node
+    node
   end
 end
