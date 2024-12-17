@@ -25,6 +25,17 @@ class Traverse
     preorder(node.right, result)
   end
 
+  def postorder(node, stack = [], result = [])
+    return result if node.nil?
+
+    until stack.empty? && node.nil?
+      node = push_root_and_right_nodes(node, stack) while node
+      node = stack.pop
+      node = right_node_exist?(node, stack) ? update_stack(node, stack) : update_result(node, result)
+    end
+    result
+  end
+
   private
 
   def level_order_iteration(node, queue = [], result = [])
@@ -54,5 +65,28 @@ class Traverse
     node = is_left ? node.left : node.right
     stack << node if node
     node
+  end
+
+  def push_root_and_right_nodes(node, stack)
+    push_nodes(node, stack, is_left: false)
+    stack << node if node
+    node.left
+  end
+
+  def right_node_exist?(node, stack)
+    return false if node.right.nil? || stack.empty?
+
+    node.right == stack.last
+  end
+
+  def update_stack(node, stack)
+    stack.pop
+    stack << node
+    node.right
+  end
+
+  def update_result(node, result)
+    result << node.value
+    nil
   end
 end
