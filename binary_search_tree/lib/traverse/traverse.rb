@@ -17,6 +17,14 @@ class Traverse
     result
   end
 
+  def preorder(node, result = [])
+    return result if node.nil?
+
+    result << node.value
+    preorder(node.left, result)
+    preorder(node.right, result)
+  end
+
   private
 
   def level_order_iteration(node, queue = [], result = [])
