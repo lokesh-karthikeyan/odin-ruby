@@ -3,6 +3,7 @@
 require_relative '../node/node'
 
 # This Class helps in building a 'Tree' like structure from the given array.
+# It also contains behaviours of insertion & deletion.
 class Tree
   attr_accessor :root
 
@@ -37,6 +38,19 @@ class Tree
     current_node.value
   end
 
+  def delete_node_with_double_child(current_node)
+    parent_node, replacement_node = inorder_successor(current_node)
+
+    if replacement_node.left || replacement_node.right
+      delete_node_with_single_child(parent_node, replacement_node)
+    else
+      delete_leaf_node(parent_node, replacement_node)
+    end
+
+    replace_values(current_node, replacement_node)
+    current_node.value
+  end
+
   private
 
   attr_accessor :node
@@ -62,4 +76,17 @@ class Tree
   def assign_left_node(assignee_node, assignor_node) = assignee_node.left = assignor_node
 
   def assign_right_node(assignee_node, assignor_node) = assignee_node.right = assignor_node
+
+  def inorder_successor(node)
+    previous_node = node
+    current_node = node.right
+
+    while current_node.left
+      previous_node = current_node
+      current_node = current_node.left
+    end
+    [previous_node, current_node]
+  end
+
+  def replace_values(current_node, replacement_node) = (current_node.value = replacement_node.value)
 end
