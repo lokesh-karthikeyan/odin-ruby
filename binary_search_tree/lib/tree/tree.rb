@@ -17,6 +17,26 @@ class Tree
     value
   end
 
+  def delete_leaf_node(previous_node, current_node)
+    if current_node < previous_node
+      assign_left_node(previous_node, nil)
+      return current_node.value
+    end
+
+    assign_right_node(previous_node, nil)
+    current_node.value
+  end
+
+  def delete_node_with_single_child(previous_node, current_node)
+    if current_node < previous_node
+      assign_left_node(previous_node, current_node.left || current_node.right)
+      return current_node.value
+    end
+
+    assign_right_node(previous_node, current_node.left || current_node.right)
+    current_node.value
+  end
+
   private
 
   attr_accessor :node
