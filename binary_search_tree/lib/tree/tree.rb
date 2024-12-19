@@ -6,19 +6,15 @@ require_relative '../node/node'
 class Tree
   attr_accessor :root
 
-  def insert_node(value, previous_node = nil, root_node = @root)
-    return insert_first_node(value) if root_node.nil?
-
-    while root_node
-      return value if value == root_node.value
-
-      previous_node = root_node
-      root_node = value < root_node.value ? root_node.left : root_node.right
+  def insert_as_leaf_node(value, node, is_left: true)
+    new_node = create_node(value)
+    if is_left
+      assign_left_node(node, new_node)
+      return value
     end
 
-    return insert_as_leaf_node(value, previous_node, is_left: true) if value < previous_node.value
-
-    insert_as_leaf_node(value, previous_node, is_left: false)
+    assign_right_node(node, new_node)
+    value
   end
 
   private
@@ -43,17 +39,7 @@ class Tree
 
   def create_node(value = nil, left = nil, right = nil) = node.new(value, left, right)
 
-  def insert_first_node(value)
-    self.root = self.class.new([value]).root
-    value
-  end
+  def assign_left_node(assignee_node, assignor_node) = assignee_node.left = assignor_node
 
-  def insert_as_leaf_node(value, node, is_left: true)
-    unless is_left
-      node.right = create_node(value)
-      return value
-    end
-    node.left = create_node(value)
-    value
-  end
+  def assign_right_node(assignee_node, assignor_node) = assignee_node.right = assignor_node
 end
