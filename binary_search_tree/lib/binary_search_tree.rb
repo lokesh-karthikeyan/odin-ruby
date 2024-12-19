@@ -17,9 +17,28 @@ class BinarySearchTree
 
     return value if current_node
     return create_tree([value]) if previous_node.nil? && current_node.nil?
-    return binary_search_tree.insert_as_leaf_node(value, previous_node, is_left: true) if value < previous_node.value
 
-    binary_search_tree.insert_as_leaf_node(value, previous_node, is_left: false)
+    if value < previous_node.value
+      binary_search_tree.insert_as_leaf_node(value, previous_node, is_left: true)
+    else
+      binary_search_tree.insert_as_leaf_node(value, previous_node, is_left: false)
+    end
+    # rebalance unless balanced?
+    value
+  end
+
+  def delete(value)
+    previous_node, current_node = find_family(value, @root)
+
+    return nil if current_node.nil?
+    return binary_search_tree.delete_leaf_node(previous_node, current_node) if leaf_node?(current_node)
+
+    if double_child?(current_node)
+      binary_search_tree.delete_node_with_double_child(current_node)
+    else
+      binary_search_tree.delete_node_with_single_child(previous_node, current_node)
+    end
+    value
   end
 
   private
@@ -49,4 +68,8 @@ class BinarySearchTree
     end
     [previous_node, current_node]
   end
+
+  def leaf_node?(node) = node.left.nil? && node.right.nil?
+
+  def double_child?(node) = node.left && node.right
 end
