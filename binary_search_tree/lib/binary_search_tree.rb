@@ -41,6 +41,8 @@ class BinarySearchTree
     value
   end
 
+  def find(value) = find_family(value, @root).last&.value || nil
+
   private
 
   attr_accessor :tree, :root, :traverse, :binary_search_tree
