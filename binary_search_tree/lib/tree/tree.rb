@@ -6,12 +6,6 @@ require_relative '../node/node'
 class Tree
   attr_accessor :root
 
-  def view(node = @root, prefix = '', is_left: true)
-    view(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false) if node.right
-    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
-    view(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", is_left: true) if node.left
-  end
-
   def insert_node(value, previous_node = nil, root_node = @root)
     return insert_first_node(value) if root_node.nil?
 
