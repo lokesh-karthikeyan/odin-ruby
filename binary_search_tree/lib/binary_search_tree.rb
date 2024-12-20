@@ -23,7 +23,6 @@ class BinarySearchTree
     else
       binary_search_tree.insert_as_leaf_node(value, previous_node, is_left: false)
     end
-    # rebalance unless balanced?
     value
   end
 
@@ -42,6 +41,15 @@ class BinarySearchTree
   end
 
   def find(value) = find_family(value, @root).last&.value || nil
+
+  def level_order(&block)
+    nodes_in_the_tree = traverse.level_order(@root)
+    return nodes_in_the_tree unless block_given?
+
+    nodes_in_the_tree.map do |value|
+      block.call(value)
+    end
+  end
 
   private
 
