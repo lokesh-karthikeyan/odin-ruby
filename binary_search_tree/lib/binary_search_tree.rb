@@ -89,6 +89,8 @@ class BinarySearchTree
     depth(node, root_node, depth + 1)
   end
 
+  def balanced? = (height(root.left) - height(root.right)).abs <= 1
+
   private
 
   attr_accessor :tree, :traverse, :binary_search_tree
