@@ -91,6 +91,11 @@ class BinarySearchTree
 
   def balanced? = (height(root.left) - height(root.right)).abs <= 1
 
+  def rebalance
+    nodes_in_the_tree = traverse.inorder(@root)
+    create_tree(nodes_in_the_tree)
+  end
+
   private
 
   attr_accessor :tree, :traverse, :binary_search_tree
