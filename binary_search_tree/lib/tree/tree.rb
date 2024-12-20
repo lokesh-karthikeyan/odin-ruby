@@ -9,33 +9,24 @@ class Tree
 
   def insert_as_leaf_node(value, node, is_left: true)
     new_node = create_node(value)
-    if is_left
-      assign_left_node(node, new_node)
-      return value
-    end
-
-    assign_right_node(node, new_node)
-    value
+    is_left ? assign_left_node(node, new_node) : assign_right_node(node, new_node)
   end
 
   def delete_leaf_node(previous_node, current_node)
     if current_node < previous_node
       assign_left_node(previous_node, nil)
-      return current_node.value
+    else
+      assign_right_node(previous_node, nil)
     end
-
-    assign_right_node(previous_node, nil)
     current_node.value
   end
 
   def delete_node_with_single_child(previous_node, current_node)
     if current_node < previous_node
       assign_left_node(previous_node, current_node.left || current_node.right)
-      return current_node.value
+    else
+      assign_right_node(previous_node, current_node.left || current_node.right)
     end
-
-    assign_right_node(previous_node, current_node.left || current_node.right)
-    current_node.value
   end
 
   def delete_node_with_double_child(current_node)
@@ -48,7 +39,6 @@ class Tree
     end
 
     replace_values(current_node, replacement_node)
-    current_node.value
   end
 
   private
