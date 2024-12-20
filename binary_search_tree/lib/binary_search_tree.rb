@@ -46,9 +46,28 @@ class BinarySearchTree
     nodes_in_the_tree = traverse.level_order(@root)
     return nodes_in_the_tree unless block_given?
 
-    nodes_in_the_tree.map do |value|
-      block.call(value)
-    end
+    nodes_in_the_tree.map { |value| block.call(value) }
+  end
+
+  def inorder(&block)
+    nodes_in_the_tree = traverse.inorder(@root)
+    return nodes_in_the_tree unless block_given?
+
+    nodes_in_the_tree.map { |value| block.call(value) }
+  end
+
+  def preorder(&block)
+    nodes_in_the_tree = traverse.preorder(@root)
+    return nodes_in_the_tree unless block_given?
+
+    nodes_in_the_tree.map { |value| block.call(value) }
+  end
+
+  def postorder(&block)
+    nodes_in_the_tree = traverse.postorder(@root)
+    return nodes_in_the_tree unless block_given?
+
+    nodes_in_the_tree.map { |value| block.call(value) }
   end
 
   private
