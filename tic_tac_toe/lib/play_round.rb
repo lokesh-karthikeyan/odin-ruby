@@ -1,95 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'board'
-require_relative 'player'
-require_relative 'rounds'
+require_relative 'terminal_messages'
 
-# This class calls other classes (or) modules and operate on those results.
-# It acts like a central class & do some actions from the return results of other class & modules.
+# This Class creates an instance of 'Board' class & contains methods to play game.
 class PlayRound
-  # protected
-  #
-  # attr_accessor :new_game, :player1, :player2, :player1_profile, :player2_profile, :winner_decided
-  #
-  # include Rounds
-  #
-  # def initialize
-  #   @new_game = Board.new
-  #   @player1 = Player.new
-  #   @player2 = Player.new
-  #   @winner_decided = false
-  #   round_intro
-  #   show_sample_board
-  #   initiate_player1
-  #   initiate_player2
-  #   new_game.clear
-  #   start_game
-  # end
-  #
-  # def initiate_player1
-  #   player1_name = player1.name(1)
-  #   player1_flag_symbol = player1.banner(player1_name)
-  #   @player1_profile = {
-  #     name: player1_name,
-  #     banner: player1_flag_symbol,
-  #     choice: ''
-  #   }
-  # end
-  #
-  # def initiate_player2
-  #   player2_name = player2.name(2)
-  #   player2_flag_symbol = player2_banner
-  #   @player2_profile = {
-  #     name: player2_name,
-  #     banner: player2_flag_symbol,
-  #     choice: ''
-  #   }
-  # end
-  #
-  # def player2_banner
-  #   return 'O' if player1_profile[:banner].eql?('X')
-  #
-  #   'X' if player1_profile[:banner].eql?('O')
-  # end
-  #
-  # def player1_turn
-  #   player1_profile[:choice] = player1.position_of_choice(player1_profile[:name], player1_profile[:banner])
-  #   puts new_game.update(player1_profile[:choice], player1_profile[:banner])
-  # end
-  #
-  # def player2_turn
-  #   player2_profile[:choice] = player2.position_of_choice(player2_profile[:name], player2_profile[:banner])
-  #   puts new_game.update(player2_profile[:choice], player2_profile[:banner])
-  # end
-  #
-  # public
-  #
-  # def start_game
-  #   1.upto(9) do |number|
-  #     player1_turn if number.odd?
-  #     player2_turn if number.even?
-  #     next unless new_game.won?(number)
-  #
-  #     round_has_winner(number)
-  #     @winner_decided = true
-  #     break
-  #   end
-  #   round_is_tie unless winner_decided
-  # end
-  #
-  # def play_next_round?
-  #   Player.available_positions = (1..9).to_a
-  #   round_outro.eql?('Y')
-  # end
-  attr_accessor :board, :player1_name, :player2_name, :player1_choice, :player2_choice
-
-  def initialize(board = Board.new)
-    self.board = board
-  end
-
   def show_starter_details
     show_introduction
     show_rules
+    show_board
   end
 
   def inquire_player_details
@@ -99,26 +18,29 @@ class PlayRound
     self.player2_choice = player1_choice == 'X' ? 'O' : 'X'
   end
 
-  def show_introduction
-    introduction = <<~INTRO
-      ***********************************************************************************************************
-      * This is a terminal based Tic Tac Toe (also known as “Noughts and Crosses”) game.                        *
-      * It's a two-player game, where one player is a 'X'(Cross) and the other is 'O'(Noughts).                 *
-      * The winner is decided if 'X' or 'O' is aligned simultaneously in any directions.                        *
-      * Alignment can be either vertical (or) horizontal (or) diagonal.                                         *
-      * The corresponding symbol's player wins the match.                                                       *
-      ***********************************************************************************************************
-    INTRO
-    puts introduction.colorize(:yellow)
+  def start_game
+    1.upto(9) do |turn|
+      current_player = player_turn(turn)
+      place_holder = inquire_place_holder(current_player[:name], current_player[:choice])
+      board.update_grids(place_holder, current_player[:choice])
+      show_board(board_status)
+      return game_won if won?
+    end
+    game_lost
   end
 
-  def show_rules
-    rules = <<~RULES
-      + ------------------------------------------------------------------------------------------------------- +
-      | Notice the numbers on the board, the numbers acts as a place where you need to put the 'X' or 'O'.      |
-      + ------------------------------------------------------------------------------------------------------- +
-    RULES
-    print rules.colorize(:red)
+  def continue_game?
+    choice = ''
+    puts '============================================================================================='.colorize(:red)
+    loop do
+      print "Ready for another round? Press 'Y' for 'Yes', 'N' for 'No': ".colorize(:blue)
+      choice = gets.chomp.upcase
+
+      break if %w[Y N].include?(choice)
+
+      invalid_selection
+    end
+    choice == 'Y'
   end
 
   def inquire_player_name(player_id)
@@ -134,7 +56,63 @@ class PlayRound
 
       return choice if choice.eql?('X') || choice.eql?('O')
 
-      puts 'Invalid Selection'.colorize(:red)
+      invalid_selection
     end
+  end
+
+  def inquire_place_holder(name, choice)
+    place_holder_number = ''
+    loop do
+      print "\n#{name}, Enter the available placeholder number (1-9) for '#{choice}': ".colorize(:light_cyan)
+      place_holder_number = gets.chomp.to_i
+
+      return place_holder_number if place_holder_number.between?(1, 9) && valid_place_holder?(place_holder_number)
+
+      invalid_selection
+    end
+  end
+
+  def won?
+    possibilities.each do |possibility|
+      grid1, grid2, grid3 = possibility
+      next if board_status[grid1] == ' '
+
+      if aligned?(grid1, grid2, grid3)
+        update_winner_profile(board_status[grid1])
+        return true
+      end
+    end
+    false
+  end
+
+  private
+
+  include TerminalMessages
+
+  attr_accessor :board, :player1_name, :player2_name, :player1_choice, :player2_choice, :winner_profile
+
+  def initialize(board = Board.new) = self.board = board
+
+  def player_turn(turn)
+    turn.odd? ? { name: player1_name, choice: player1_choice } : { name: player2_name, choice: player2_choice }
+  end
+
+  def valid_place_holder?(place_holder)
+    empty_indices = board_status.each_index.select { |index| board_status[index] == ' ' }
+    incremented_indices = empty_indices.map { |index| index + 1 }
+    incremented_indices.include?(place_holder)
+  end
+
+  def board_status = board.game_board
+
+  def possibilities = Board::WINNING_POSSIBILITIES
+
+  def aligned?(index1, index2, index3)
+    (board_status[index1] == board_status[index2]) && (board_status[index1] == board_status[index3])
+  end
+
+  def update_winner_profile(character)
+    player_name = character.eql?(player1_choice) ? player1_name : player2_name
+    self.winner_profile = { name: player_name, choice: character }
   end
 end
