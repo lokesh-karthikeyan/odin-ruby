@@ -8,7 +8,11 @@ class TicTacToe
   def initialize
     loop do
       new_game_instance = PlayRound.new
-      next if new_game_instance.play_next_round?
+      new_game_instance.show_starter_details
+      new_game_instance.inquire_player_details
+      new_game_instance.start_game
+
+      next if new_game_instance.continue_game?
 
       break
     end
