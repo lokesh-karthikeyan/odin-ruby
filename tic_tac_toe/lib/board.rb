@@ -1,62 +1,16 @@
 # frozen_string_literal: true
 
-require_relative 'is_aligned'
-
-# This class contains the board data in a format that can be shown in display.
-# The board values are updated based on various scenarios such as while starting and updating and finishing each rounds.
+# This class creates an instances of the board & updates it.
 class Board
-  include IsAligned
+  WINNING_POSSIBILITIES = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8],
+                           [2, 4, 6]].freeze
 
-  protected
+  attr_accessor :game_board
 
-  attr_reader :options
+  def initialize = self.game_board = Array.new(9, ' ')
 
-  def initialize
-    @options = { 1 => ' ', 2 => ' ', 3 => ' ', 4 => ' ', 5 => ' ', 6 => ' ', 7 => ' ', 8 => ' ', 9 => ' ' }
-  end
-
-  def row1
-    " #{options[1]} | #{options[2]} | #{options[3]} "
-  end
-
-  def row2
-    " #{options[4]} | #{options[5]} | #{options[6]} "
-  end
-
-  def row3
-    " #{options[7]} | #{options[8]} | #{options[9]} "
-  end
-
-  def separators
-    '---+---+---'
-  end
-
-  def board
-    "+ ------------------------------------------------------------------------------------------------------- +
-|                                                                                                         |
-|                                              #{row1}                                                |
-|                                              #{separators}                                                |
-|                                              #{row2}                                                |
-|                                              #{separators}                                                |
-|                                              #{row3}                                                |
-|                                                                                                         |
-+ ------------------------------------------------------------------------------------------------------- +".colorize(:light_white) # rubocop:disable Metrics/LineLength
-  end
-
-  public
-
-  def starter
-    1.upto(options.length) { |number| options[number] = number }
-    board
-  end
-
-  def update(position, player_flag)
-    options[position] = player_flag
-    board
-  end
-
-  def clear
-    1.upto(options.length) { |number| options[number] = ' ' }
-    board
+  def update_grids(position, character)
+    index = position - 1
+    game_board[index] = character
   end
 end
