@@ -24,7 +24,7 @@ class PlayRound
       place_holder = inquire_place_holder(current_player[:name], current_player[:choice])
       board.update_grids(place_holder, current_player[:choice])
       show_board(board_status)
-      return game_won if won?
+      return game_won if turn > 4 && won?
     end
     game_lost
   end
