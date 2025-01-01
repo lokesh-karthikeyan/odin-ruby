@@ -12,10 +12,21 @@ class GameBoard
   end
 
   def update_board(position, player_id)
-    index = position - 1
-    current_row = ROWS - 1
+    index = compute_index(position)
+    current_row = compute_index(ROWS)
     current_row -= 1 while board[current_row][index] != 0
     board[current_row][index] = player_id
     self.last_move = [current_row, index]
   end
+
+  def valid_position?(position)
+    index = compute_index(position)
+    return false if board.first[index].nil?
+
+    board.first[index].zero?
+  end
+
+  private
+
+  def compute_index(position) = (position - 1)
 end
