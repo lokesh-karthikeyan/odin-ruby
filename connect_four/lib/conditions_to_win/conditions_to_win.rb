@@ -12,8 +12,8 @@ class ConditionsToWin
 
   def horizontal_connection?
     discs_count = 1
-    column = indices.last
     row = indices.first
+    column = indices.last
     CONNECTED_DISCS.times do
       column += 1
       discs_count += 1 if identical_discs?(row, column)
@@ -28,6 +28,24 @@ class ConditionsToWin
     discs_connected?(discs_count)
   end
 
+  def vertical_connection?
+    discs_count = 1
+    row = indices.first
+    column = indices.last
+    CONNECTED_DISCS.times do
+      row += 1
+      discs_count += 1 if identical_discs?(row, column)
+      break if !identical_discs?(row, column) || discs_connected?(discs_count) || last_row?(row)
+    end
+    row = indices.first
+    CONNECTED_DISCS.times do
+      row -= 1
+      discs_count += 1 if identical_discs?(row, column)
+      break if !identical_discs?(row, column) || discs_connected?(discs_count) || last_row?(row)
+    end
+    discs_connected?(discs_count)
+  end
+
   private
 
   CONNECTED_DISCS = 4
@@ -37,4 +55,6 @@ class ConditionsToWin
   def discs_connected?(discs_count) = (discs_count == CONNECTED_DISCS)
 
   def identical_discs?(row_index, column_index) = matrix_array[row_index][column_index] == player_id
+
+  def last_row?(row_index) = (row_index == (matrix_array.length - 1))
 end
