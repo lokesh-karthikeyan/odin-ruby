@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require_relative '../lib/game_board//game_board'
+require_relative '../lib/conditions_to_win/conditions_to_win'
 
 # rubocop:disable Metrics/BlockLength
 describe GameBoard do
-  subject(:game_board) { described_class.new }
+  subject(:game_board) { described_class.new(winning_conditions) }
   let(:board) { game_board.instance_variable_get(:@board) }
+  let(:winning_conditions) { double('winning_conditions') }
 
   describe '#initialize' do
     context "When it's instantiated" do
@@ -152,6 +154,45 @@ describe GameBoard do
       subject { game_board.valid_position?(position) }
 
       it { is_expected.to be false }
+    end
+  end
+
+  describe '#tie?' do
+    context 'When the board is not full' do
+      it 'should return false' do
+        expect(game_board).not_to be_tie
+      end
+    end
+
+    context 'When the board is full' do
+      before do
+        set_board = [
+          [1, 2, 1, 1, 2, 1, 2],
+          [1, 1, 2, 1, 1, 2, 1],
+          [2, 1, 1, 2, 2, 2, 1],
+          [2, 2, 2, 1, 2, 1, 2],
+          [1, 1, 1, 2, 1, 1, 1],
+          [2, 2, 2, 1, 2, 1, 2]
+        ]
+        game_board.instance_variable_set(:@board, set_board)
+      end
+
+      it 'should return true' do
+        expect(game_board).to be_tie
+      end
+    end
+  end
+
+  describe '#won?' do
+    let(:board_with_wins) { described_class.new(win_conditions) }
+    let(:win_conditions) { instance_double(ConditionsToWin) }
+
+    context 'When player_id is given' do
+      it 'should send messages to the "ConditionsToWin#conditions_satisfied?"' do
+        expect(win_conditions).to receive(:conditions_satisfied?)
+        player_id = 2
+        board_with_wins.won?(player_id)
+      end
     end
   end
 end
