@@ -198,5 +198,66 @@ describe ConditionsToWin do
       it { is_expected.not_to be true }
     end
   end
+
+  describe '#trailing_diagonal_connection?' do
+    let(:trailing_diagonal_win) do
+      [
+        [0, 0, 0, 2, 0, 0, 0],
+        [0, 0, 2, 1, 2, 0, 0],
+        [0, 2, 1, 1, 1, 0, 0],
+        [2, 1, 2, 1, 2, 1, 0],
+        [2, 1, 1, 2, 1, 2, 0],
+        [1, 0, 0, 2, 1, 2, 0]
+      ]
+    end
+    before { winning_conditions.instance_variable_set(:@matrix_array, trailing_diagonal_win) }
+
+    context 'When the discs are connected' do
+      context 'With the connection is from upward -> downward' do
+        subject { winning_conditions.trailing_diagonal_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [0, 3])
+          winning_conditions.instance_variable_set(:@player_id, 2)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context 'With the connection is from downward -> upward' do
+        subject { winning_conditions.trailing_diagonal_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [3, 0])
+          winning_conditions.instance_variable_set(:@player_id, 2)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context 'With the connection can be upward <==> downward' do
+        subject { winning_conditions.trailing_diagonal_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [2, 1])
+          winning_conditions.instance_variable_set(:@player_id, 2)
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'When the discs are not connected' do
+      subject { winning_conditions.leading_diagonal_connection? }
+
+      before do
+        winning_conditions.instance_variable_set(:@matrix_array, not_connected_board)
+        winning_conditions.instance_variable_set(:@indices, [2, 3])
+        winning_conditions.instance_variable_set(:@player_id, 1)
+      end
+
+      it { is_expected.not_to be true }
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
