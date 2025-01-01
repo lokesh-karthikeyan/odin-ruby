@@ -67,6 +67,27 @@ class ConditionsToWin
     discs_connected?(total_discs)
   end
 
+  def trailing_diagonal_connection?
+    total_discs = 1
+    row = indices.first
+    column = indices.last
+    CONNECTED_DISCS.times do
+      row += 1
+      column -= 1
+      total_discs += 1 if identical_discs?(row, column)
+      break if !identical_discs?(row, column) || discs_connected?(total_discs)
+    end
+    row = indices.first
+    column = indices.last
+    CONNECTED_DISCS.times do
+      row -= 1
+      column += 1
+      total_discs += 1 if identical_discs?(row, column)
+      break if !identical_discs?(row, column) || discs_connected?(total_discs)
+    end
+    discs_connected?(total_discs)
+  end
+
   private
 
   CONNECTED_DISCS = 4
