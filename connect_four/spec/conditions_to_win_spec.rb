@@ -137,5 +137,66 @@ describe ConditionsToWin do
       it { is_expected.not_to be true }
     end
   end
+
+  describe '#leading_diagonal_connection?' do
+    let(:leading_diagonal_win) do
+      [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 1, 0, 0],
+        [0, 0, 1, 1, 2, 1, 0],
+        [0, 0, 1, 2, 1, 2, 0],
+        [0, 0, 0, 2, 1, 1, 0]
+      ]
+    end
+    before { winning_conditions.instance_variable_set(:@matrix_array, leading_diagonal_win) }
+
+    context 'When the discs are connected' do
+      context 'With the connection is from upward -> downward' do
+        subject { winning_conditions.leading_diagonal_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [2, 2])
+          winning_conditions.instance_variable_set(:@player_id, 1)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context 'With the connection is from downward -> upward' do
+        subject { winning_conditions.leading_diagonal_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [5, 5])
+          winning_conditions.instance_variable_set(:@player_id, 1)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context 'With the connection can be upward <==> downward' do
+        subject { winning_conditions.leading_diagonal_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [4, 4])
+          winning_conditions.instance_variable_set(:@player_id, 1)
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'When the discs are not connected' do
+      subject { winning_conditions.leading_diagonal_connection? }
+
+      before do
+        winning_conditions.instance_variable_set(:@matrix_array, not_connected_board)
+        winning_conditions.instance_variable_set(:@indices, [3, 3])
+        winning_conditions.instance_variable_set(:@player_id, 2)
+      end
+
+      it { is_expected.not_to be true }
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
