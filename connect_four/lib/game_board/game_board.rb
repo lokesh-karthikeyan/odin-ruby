@@ -2,13 +2,9 @@
 
 # Components and Functionalities related to the 'Game Board'.
 class GameBoard
-  ROWS = 6
-  COLUMNS = 7
-
-  attr_accessor :board, :last_move
-
-  def initialize
+  def initialize(winning_condition_checks)
     self.board = Array.new(ROWS) { Array.new(COLUMNS, 0) }
+    self.winning_condition_checks = winning_condition_checks
   end
 
   def update_board(position, player_id)
@@ -26,7 +22,19 @@ class GameBoard
     board.first[index].zero?
   end
 
+  def tie?
+    board.each { |row| return false if row.first.zero? }
+    true
+  end
+
+  def won?(player_id) = winning_condition_checks.conditions_satisfied?(board, last_move, player_id)
+
   private
+
+  ROWS = 6
+  COLUMNS = 7
+
+  attr_accessor :board, :last_move, :winning_condition_checks
 
   def compute_index(position) = (position - 1)
 end
