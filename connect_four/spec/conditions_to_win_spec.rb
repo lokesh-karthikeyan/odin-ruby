@@ -76,5 +76,66 @@ describe ConditionsToWin do
       it { is_expected.not_to be true }
     end
   end
+
+  describe '#vertical_connection?' do
+    let(:vertical_win) do
+      [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 1, 2, 2, 1, 0],
+        [0, 0, 1, 2, 1, 2, 0],
+        [0, 0, 0, 2, 1, 2, 0]
+      ]
+    end
+    before { winning_conditions.instance_variable_set(:@matrix_array, vertical_win) }
+
+    context 'When the discs are connected' do
+      context 'With the connection is from top -> bottom' do
+        subject { winning_conditions.vertical_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [1, 2])
+          winning_conditions.instance_variable_set(:@player_id, 1)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context 'With the connection is from bottom -> top' do
+        subject { winning_conditions.vertical_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [4, 2])
+          winning_conditions.instance_variable_set(:@player_id, 1)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context 'With the connection can be top <==> bottom' do
+        subject { winning_conditions.vertical_connection? }
+
+        before do
+          winning_conditions.instance_variable_set(:@indices, [3, 2])
+          winning_conditions.instance_variable_set(:@player_id, 1)
+        end
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'When the discs are not connected' do
+      subject { winning_conditions.vertical_connection? }
+
+      before do
+        winning_conditions.instance_variable_set(:@matrix_array, not_connected_board)
+        winning_conditions.instance_variable_set(:@indices, [3, 3])
+        winning_conditions.instance_variable_set(:@player_id, 2)
+      end
+
+      it { is_expected.not_to be true }
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
