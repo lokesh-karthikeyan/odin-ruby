@@ -259,5 +259,69 @@ describe ConditionsToWin do
       it { is_expected.not_to be true }
     end
   end
+
+  describe '#count_discs' do
+    let(:fully_connected_board) do
+      [
+        [0, 0, 0, 2, 0, 0, 0],
+        [0, 0, 2, 1, 2, 0, 0],
+        [0, 2, 1, 1, 1, 0, 0],
+        [2, 1, 2, 1, 2, 1, 0],
+        [2, 1, 1, 2, 1, 2, 0],
+        [1, 0, 0, 2, 1, 2, 0]
+      ]
+    end
+    let(:partially_connected_board) do
+      [
+        [0, 0, 0, 2, 0, 0, 0],
+        [0, 0, 0, 1, 2, 0, 0],
+        [0, 2, 1, 1, 1, 0, 0],
+        [2, 1, 2, 1, 2, 1, 0],
+        [2, 1, 1, 2, 1, 2, 0],
+        [1, 0, 0, 2, 1, 2, 0]
+      ]
+    end
+
+    context 'When given a fully connected board' do
+      subject { winning_conditions.count_discs(row, column) }
+      let(:row) { 3 }
+      let(:column) { 0 }
+      before do
+        winning_conditions.instance_variable_set(:@player_id, 2)
+        winning_conditions.instance_variable_set(:@matrix_array, fully_connected_board)
+        winning_conditions.instance_variable_set(:@has_to_decrement_row, true)
+        winning_conditions.instance_variable_set(:@has_to_increment_column, true)
+      end
+
+      it { is_expected.to eq(4) }
+    end
+
+    context 'When given a partially connected board' do
+      subject { winning_conditions.count_discs(row, column) }
+      let(:row) { 2 }
+      let(:column) { 2 }
+      before do
+        winning_conditions.instance_variable_set(:@player_id, 1)
+        winning_conditions.instance_variable_set(:@matrix_array, partially_connected_board)
+        winning_conditions.instance_variable_set(:@has_to_increment_row, true)
+        winning_conditions.instance_variable_set(:@has_to_increment_column, true)
+      end
+
+      it { is_expected.to eq(3) }
+    end
+
+    context 'When given a not connected board' do
+      subject { winning_conditions.count_discs(row, column) }
+      let(:row) { 2 }
+      let(:column) { 3 }
+      before do
+        winning_conditions.instance_variable_set(:@player_id, 1)
+        winning_conditions.instance_variable_set(:@matrix_array, not_connected_board)
+        winning_conditions.instance_variable_set(:@has_to_increment_column, true)
+      end
+
+      it { is_expected.to eq(1) }
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
