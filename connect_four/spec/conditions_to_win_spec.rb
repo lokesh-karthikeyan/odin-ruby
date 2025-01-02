@@ -260,7 +260,7 @@ describe ConditionsToWin do
     end
   end
 
-  describe '#count_discs' do
+  describe '#count_next_discs' do
     let(:fully_connected_board) do
       [
         [0, 0, 0, 2, 0, 0, 0],
@@ -283,7 +283,7 @@ describe ConditionsToWin do
     end
 
     context 'When given a fully connected board' do
-      subject { winning_conditions.count_discs(row, column) }
+      subject { winning_conditions.count_next_discs(row, column) }
       let(:row) { 3 }
       let(:column) { 0 }
       before do
@@ -293,11 +293,11 @@ describe ConditionsToWin do
         winning_conditions.instance_variable_set(:@has_to_increment_column, true)
       end
 
-      it { is_expected.to eq(4) }
+      it { is_expected.to eq(3) }
     end
 
     context 'When given a partially connected board' do
-      subject { winning_conditions.count_discs(row, column) }
+      subject { winning_conditions.count_next_discs(row, column) }
       let(:row) { 2 }
       let(:column) { 2 }
       before do
@@ -307,11 +307,11 @@ describe ConditionsToWin do
         winning_conditions.instance_variable_set(:@has_to_increment_column, true)
       end
 
-      it { is_expected.to eq(3) }
+      it { is_expected.to eq(2) }
     end
 
     context 'When given a not connected board' do
-      subject { winning_conditions.count_discs(row, column) }
+      subject { winning_conditions.count_next_discs(row, column) }
       let(:row) { 2 }
       let(:column) { 3 }
       before do
@@ -320,7 +320,37 @@ describe ConditionsToWin do
         winning_conditions.instance_variable_set(:@has_to_increment_column, true)
       end
 
-      it { is_expected.to eq(1) }
+      it { is_expected.to be_zero }
+    end
+  end
+
+  describe '#conditions_satisfied?' do
+    context 'When the discs are connected inside the board' do
+      let(:winning_board) do
+        [
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 1, 1, 1, 0, 0],
+          [0, 0, 1, 1, 2, 1, 0],
+          [0, 0, 1, 2, 1, 2, 0],
+          [0, 0, 0, 2, 1, 1, 0]
+        ]
+      end
+      let(:indices) { [3, 3] }
+      let(:player_id) { 1 }
+
+      subject { winning_conditions.conditions_satisfied?(winning_board, indices, player_id) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'When the discs are not connected inside the board' do
+      let(:indices) { [3, 3] }
+      let(:player_id) { 2 }
+
+      subject { winning_conditions.conditions_satisfied?(not_connected_board, indices, player_id) }
+
+      it { is_expected.not_to be true }
     end
   end
 end
