@@ -7,7 +7,8 @@ class ConditionsToWin
     self.matrix_array = matrix_array
     self.indices = indices
     self.player_id = player_id
-    horizontal_connection?
+
+    horizontal_connection? || vertical_connection? || leading_diagonal_connection? || trailing_diagonal_connection?
   end
 
   def horizontal_connection?(row = indices.first, column = indices.last, current_disc_count = 1)
