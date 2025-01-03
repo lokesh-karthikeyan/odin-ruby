@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require_relative '../displayable/displayable'
+
 # Components and Functionalities related to the 'Game Board'.
 class GameBoard
+  include Displayable
+
   def initialize(winning_condition_checks)
     self.board = Array.new(ROWS) { Array.new(COLUMNS, 0) }
     self.winning_condition_checks = winning_condition_checks
@@ -28,6 +32,8 @@ class GameBoard
   end
 
   def won?(player_id) = winning_condition_checks.conditions_satisfied?(board, last_move, player_id)
+
+  def display_board(player_disc_id) = print_board(board, player_disc_id)
 
   private
 
