@@ -7,6 +7,7 @@ module Colorable
     bright_red: '255;0;0',
     green: '119;221;119',
     light_cyan: '224;255;255',
+    orange: '255;133;71',
     purple: '133;101;196',
     red: '255;71;101',
     yellow: '255;234;0'
