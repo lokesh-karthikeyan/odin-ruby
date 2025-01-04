@@ -103,4 +103,15 @@ module Displayable
          " ] (or) [#{disc2_icon}".color(:orange) +
          " ] is aligned. It's a TIE!!".color(:orange)
   end
+
+  def next_game_prompt
+    next_game = <<~CONTINUE
+
+      Are you ready for another round?
+      Press 'Y' for [Y]es (or) 'N' for [N]o.
+
+    CONTINUE
+    puts next_game.color(:yellow)
+    print 'Enter your choice (y/n): '.color(:yellow)
+  end
 end
