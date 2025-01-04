@@ -86,4 +86,21 @@ module Displayable
     puts '   /                                    \\'.color(:orange)
     puts ' =========================================='.color(:orange)
   end
+
+  def print_position_prompt(name) = print "\n#{name}, Enter a position from (1..7): ".color(:light_cyan)
+
+  def print_winner_announcement(name, disc)
+    disc_icon = disc == 'yellow' ? yellow_disc : red_disc
+    puts "\nHurray!!! [#{disc_icon}".color(:green) + ' ] is aligned.'.color(:green)
+    puts "Congratulations, #{name}. You've WON!!".color(:green)
+  end
+
+  def print_game_tied_announcement(disc1, disc2)
+    disc1_icon = disc1 == 'yellow' ? yellow_disc : red_disc
+    disc2_icon = disc2 == 'red' ? red_disc : yellow_disc
+    puts "\nGood game!!!".color(:orange)
+    puts "Neither [#{disc1_icon}".color(:orange) +
+         " ] (or) [#{disc2_icon}".color(:orange) +
+         " ] is aligned. It's a TIE!!".color(:orange)
+  end
 end
