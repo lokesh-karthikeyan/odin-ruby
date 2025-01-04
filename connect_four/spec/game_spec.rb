@@ -90,6 +90,7 @@ describe Game do
         allow(game).to receive(:print)
         allow(game).to receive(:gets).and_return('10', '9', '8', '7', '6', '5', '4', '3')
         allow(game_board).to receive(:valid_position?).and_return(false, false, false, true, true, false, false, true)
+        allow(game).to receive(:puts)
         allow(game).to receive(:game_over?).and_return(false, false, false, false, false, false, false, false, true)
         allow(game_board).to receive(:display_board)
       end
