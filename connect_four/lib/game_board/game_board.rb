@@ -26,10 +26,7 @@ class GameBoard
     board.first[index].zero?
   end
 
-  def tie?
-    board.each { |row| return false if row.first.zero? }
-    true
-  end
+  def tie? = board.flatten.none?(&:zero?)
 
   def won?(player_id) = winning_condition_checks.conditions_satisfied?(board, last_move, player_id)
 
