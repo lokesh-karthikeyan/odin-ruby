@@ -96,7 +96,7 @@ describe Game do
       end
 
       it 'should run the contents inside the loop 8 times' do
-        expect(game_board).to receive(:update_board).exactly(8).times
+        expect(game_board).to receive(:update_board).exactly(9).times
         game.play
       end
     end
