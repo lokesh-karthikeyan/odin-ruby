@@ -7,10 +7,13 @@ class Game
   attr_accessor :current_player
 
   def play
-    until game_over?
+    loop do
       position = select_position_prompt
       game_board.update_board(position, current_player.id)
       game_board.display_board(player_disc_id)
+
+      break if game_over?
+
       switch_players
     end
     conclude_round
