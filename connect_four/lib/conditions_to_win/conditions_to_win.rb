@@ -69,8 +69,10 @@ class ConditionsToWin
     CONNECTED_DISCS.times do
       row = row_scaling(row)
       column = column_scaling(column)
+      return total_discs unless exit_condition?(row, column)
+
       total_discs += 1 if identical_discs?(row, column)
-      return total_discs if !identical_discs?(row, column) || discs_connected?(total_discs)
+      return total_discs if discs_connected?(total_discs)
     end
   end
 
@@ -119,7 +121,13 @@ class ConditionsToWin
     column_index
   end
 
-  def discs_connected?(total_discs) = (total_discs == CONNECTED_DISCS)
+  def exit_condition?(row, column) = (row_in_range?(row) && column_in_range?(column)) && identical_discs?(row, column)
+
+  def row_in_range?(row) = row.between?(0, matrix_array.length - 1)
+
+  def column_in_range?(column) = column.between?(0, matrix_array.first.length - 1)
+
+  def discs_connected?(total_discs) = (total_discs >= CONNECTED_DISCS)
 
   def identical_discs?(row_index, column_index) = matrix_array.dig(row_index, column_index) == player_id
 end
