@@ -21,3 +21,4 @@ Get hands-on-experience in the ruby language while learning the basic concepts o
 * [HashMap](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/hash_map)
 * [Binary Search Tree](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/binary_search_tree)
 * [Knights Travails](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/knights_travails)
+* [Connect Four](https://github.com/lokesh-karthikeyan/odin-ruby/tree/main/connect_four)
