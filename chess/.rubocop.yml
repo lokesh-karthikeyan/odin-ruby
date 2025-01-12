@@ -1,2 +1,6 @@
 AllCops:
   TargetRubyVersion: 3.3.6.0
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
