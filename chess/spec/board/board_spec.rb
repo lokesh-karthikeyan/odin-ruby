@@ -67,4 +67,192 @@ describe Board do
       it { is_expected.to eq(eighth_row) }
     end
   end
+
+  describe '.place_pieces' do
+    let(:new_board) { board.create }
+
+    context 'When the "FEN" string -> rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR' do
+      let(:fen_formatted_board) do
+        [
+          ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+          ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+          ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+          ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+        ]
+      end
+      let(:result) { board.place_pieces(fen_formatted_board, new_board) }
+
+      context 'When the first row is placed with pieces' do
+        subject { result[0].map { |place| [place.piece.type, place.piece.color] } }
+        first_row_piece_types = [
+          %i[Rook black], %i[Knight black], %i[Bishop black], %i[Queen black],
+          %i[King black], %i[Bishop black], %i[Knight black], %i[Rook black]
+        ]
+
+        it { is_expected.to eq(first_row_piece_types) }
+      end
+
+      context 'When the second row is placed with pieces' do
+        subject { result[1].map { |place| [place.piece.type, place.piece.color] } }
+        second_row_piece_types = [
+          %i[Pawn black], %i[Pawn black], %i[Pawn black], %i[Pawn black],
+          %i[Pawn black], %i[Pawn black], %i[Pawn black], %i[Pawn black]
+        ]
+
+        it { is_expected.to eq(second_row_piece_types) }
+      end
+
+      context 'When the third, fourth, fifth, sixth row is placed with pieces' do
+        let(:third_row) { result[2].map { |place| [place.piece.type, place.piece.color] } }
+        let(:fourth_row) { result[3].map { |place| [place.piece.type, place.piece.color] } }
+        let(:fifth_row) { result[4].map { |place| [place.piece.type, place.piece.color] } }
+        let(:sixth_row) { result[5].map { |place| [place.piece.type, place.piece.color] } }
+
+        subject { third_row + fourth_row + fifth_row + sixth_row }
+
+        null_piece_types = [
+          ['', ''], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', '']
+        ]
+
+        it { is_expected.to eq(null_piece_types) }
+      end
+
+      context 'When the seventh row is placed with pieces' do
+        subject { result[6].map { |place| [place.piece.type, place.piece.color] } }
+        seventh_row_piece_types = [
+          %i[Pawn white], %i[Pawn white], %i[Pawn white], %i[Pawn white],
+          %i[Pawn white], %i[Pawn white], %i[Pawn white], %i[Pawn white]
+        ]
+
+        it { is_expected.to eq(seventh_row_piece_types) }
+      end
+
+      context 'When the eighth row is placed with pieces' do
+        subject { result[7].map { |place| [place.piece.type, place.piece.color] } }
+        eighth_row_piece_types = [
+          %i[Rook white], %i[Knight white], %i[Bishop white], %i[Queen white],
+          %i[King white], %i[Bishop white], %i[Knight white], %i[Rook white]
+        ]
+
+        it { is_expected.to eq(eighth_row_piece_types) }
+      end
+    end
+
+    context 'When the "FEN" string -> r4bnr/ppp1k1pp/n3b3/3qP1N1/1P2P3/2N4B/PBP1KPR1/R6r' do
+      let(:fen_formatted_board) do
+        [
+          ['r', ' ', ' ', ' ', ' ', 'b', 'n', 'r'],
+          ['p', 'p', 'p', ' ', 'k', ' ', 'p', 'p'],
+          ['n', ' ', ' ', ' ', 'b', ' ', ' ', ' '],
+          [' ', ' ', ' ', 'q', 'P', ' ', 'N', ' '],
+          [' ', 'P', ' ', ' ', 'P', ' ', ' ', ' '],
+          [' ', ' ', 'N', ' ', ' ', ' ', ' ', 'B'],
+          ['P', 'B', 'P', ' ', 'K', 'P', 'R', ' '],
+          ['R', ' ', ' ', ' ', ' ', ' ', ' ', 'r']
+        ]
+      end
+      let(:result) { board.place_pieces(fen_formatted_board, new_board) }
+
+      context 'When the first, second, third, fourth row is placed with pieces' do
+        let(:first_row) { result[0].map { |place| [place.piece.type, place.piece.color] } }
+        let(:second_row) { result[1].map { |place| [place.piece.type, place.piece.color] } }
+        let(:third_row) { result[2].map { |place| [place.piece.type, place.piece.color] } }
+        let(:fourth_row) { result[3].map { |place| [place.piece.type, place.piece.color] } }
+
+        subject { first_row + second_row + third_row + fourth_row }
+
+        first_four_rows = [
+          %i[Rook black], ['', ''], ['', ''], ['', ''], ['', ''], %i[Bishop black], %i[Knight black], %i[Rook black],
+          %i[Pawn black], %i[Pawn black], %i[Pawn black], ['', ''], %i[King black], ['', ''], %i[Pawn black],
+          %i[Pawn black],
+          %i[Knight black], ['', ''], ['', ''], ['', ''], %i[Bishop black], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], ['', ''], %i[Queen black], %i[Pawn white], ['', ''], %i[Knight white], ['', '']
+        ]
+
+        it { is_expected.to eq(first_four_rows) }
+      end
+
+      context 'When the fifth, sixth, seventh, eighth row is placed with pieces' do
+        let(:fifth_row) { result[4].map { |place| [place.piece.type, place.piece.color] } }
+        let(:sixth_row) { result[5].map { |place| [place.piece.type, place.piece.color] } }
+        let(:seventh_row) { result[6].map { |place| [place.piece.type, place.piece.color] } }
+        let(:eighth_row) { result[7].map { |place| [place.piece.type, place.piece.color] } }
+
+        subject { fifth_row + sixth_row + seventh_row + eighth_row }
+
+        last_four_rows = [
+          ['', ''], %i[Pawn white], ['', ''], ['', ''], %i[Pawn white], ['', ''], ['', ''], ['', ''],
+          ['', ''], ['', ''], %i[Knight white], ['', ''], ['', ''], ['', ''], ['', ''], %i[Bishop white],
+          %i[Pawn white], %i[Bishop white], %i[Pawn white], ['', ''], %i[King white], %i[Pawn white],
+          %i[Rook white], ['', ''],
+          %i[Rook white], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], %i[Rook black]
+        ]
+
+        it { is_expected.to eq(last_four_rows) }
+      end
+    end
+
+    context 'When the "FEN" string -> 7N/1b3RN1/7k/6b1/KBp4p/5q2/6Q1/7n' do
+      let(:fen_formatted_board) do
+        [
+          [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'N'],
+          [' ', 'b', ' ', ' ', ' ', 'R', 'N', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'k'],
+          [' ', ' ', ' ', ' ', ' ', ' ', 'b', ' '],
+          ['K', 'B', 'p', ' ', ' ', ' ', ' ', 'p'],
+          [' ', ' ', ' ', ' ', ' ', 'q', ' ', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', 'Q', ' '],
+          [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'n']
+        ]
+      end
+      let(:result) { board.place_pieces(fen_formatted_board, new_board) }
+
+      context 'When the first, second, third, fourth row is placed with pieces' do
+        let(:first_row) { result[0].map { |place| [place.piece.type, place.piece.color] } }
+        let(:second_row) { result[1].map { |place| [place.piece.type, place.piece.color] } }
+        let(:third_row) { result[2].map { |place| [place.piece.type, place.piece.color] } }
+        let(:fourth_row) { result[3].map { |place| [place.piece.type, place.piece.color] } }
+
+        subject { first_row + second_row + third_row + fourth_row }
+
+        first_four_rows = [
+          ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], %i[Knight white],
+          ['', ''], %i[Bishop black], ['', ''], ['', ''], ['', ''], %i[Rook white], %i[Knight white], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], %i[King black],
+          ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], %i[Bishop black], ['', '']
+        ]
+
+        it { is_expected.to eq(first_four_rows) }
+      end
+
+      context 'When the fifth, sixth, seventh, eighth row is placed with pieces' do
+        let(:fifth_row) { result[4].map { |place| [place.piece.type, place.piece.color] } }
+        let(:sixth_row) { result[5].map { |place| [place.piece.type, place.piece.color] } }
+        let(:seventh_row) { result[6].map { |place| [place.piece.type, place.piece.color] } }
+        let(:eighth_row) { result[7].map { |place| [place.piece.type, place.piece.color] } }
+
+        subject { fifth_row + sixth_row + seventh_row + eighth_row }
+
+        last_four_rows = [
+          %i[King white], %i[Bishop white], %i[Pawn black], ['', ''], ['', ''], ['', ''], ['', ''], %i[Pawn black],
+          ['', ''], ['', ''],  ['', ''], ['', ''], ['', ''], %i[Queen black], ['', ''], ['', ''],
+          ['', ''], ['', ''],  ['', ''], ['', ''], ['', ''], ['', ''], %i[Queen white], ['', ''],
+          ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], %i[Knight black]
+        ]
+
+        it { is_expected.to eq(last_four_rows) }
+      end
+    end
+  end
 end
