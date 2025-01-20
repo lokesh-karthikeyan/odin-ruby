@@ -29,6 +29,10 @@ describe BlackPawnMoves do
       end
 
       context 'with an ally piece in the diagonal box' do
+        before do
+          board[2][4].piece.type = :Pawn
+          board[2][4].piece.color = :black
+        end
         subject { black_pawn_moves.legal_moves }
         let(:result) { [[2, 3], [3, 3]] }
 
