@@ -32,4 +32,16 @@ module Movable
   end
 
   def null_piece?(position) = board.dig(position.first, position.last).piece.type.to_s.strip.empty?
+
+  def simulate_movements(board, source, target)
+    duplicate_board = Marshal.load(Marshal.dump(board))
+    move_piece!(duplicate_board, source[:spot], source[:piece_attributes])
+    move_piece!(duplicate_board, target[:spot], target[:piece_attributes])
+    duplicate_board
+  end
+
+  def move_piece!(duplicate_board, position, attributes)
+    duplicate_board[position.first][position.last].piece.type = attributes.first
+    duplicate_board[position.first][position.last].piece.color = attributes.last
+  end
 end

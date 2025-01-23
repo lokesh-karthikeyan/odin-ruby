@@ -31,18 +31,14 @@ class KingMoves
   end
 
   def safe_position?(location)
-    duplicate_board = Marshal.load(Marshal.dump(board))
-    modify_piece_attributes!(duplicate_board, spot, ['', ''])
     piece_type = piece(spot)
     piece_color = color(spot)
-    modify_piece_attributes!(duplicate_board, location, [piece_type, piece_color])
+
+    source = { spot: spot, piece_attributes: ['', ''] }
+    target = { spot: location, piece_attributes: [piece_type, piece_color] }
+    duplicate_board = simulate_movements(board, source, target)
 
     king_safe?(duplicate_board, location)
-  end
-
-  def modify_piece_attributes!(duplicate_board, location, attributes)
-    duplicate_board[location.first][location.last].piece.type = attributes.first
-    duplicate_board[location.first][location.last].piece.color = attributes.last
   end
 
   def king_safe?(board, location) = Checkable.enemy_whereabouts(board, location).empty?
