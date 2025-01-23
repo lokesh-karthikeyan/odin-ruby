@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../../lib/board/board'
-require_relative '../../../lib/movements/pawns/white_pawn_moves'
+require_relative '../../../lib/movements/pawn_moves/white_pawn_moves'
 
 describe WhitePawnMoves do
   describe '#legal_moves' do

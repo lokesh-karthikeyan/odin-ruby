@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/board/board'
-require_relative '../../lib/movements/pawn_moves'
+require_relative '../../../lib/board/board'
+require_relative '../../../lib/movements/pawn_moves/pawn_moves'
 
 describe PawnMoves do
   let(:board) { Board.create }

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'rook_moves'
-require_relative 'knight_moves'
-require_relative 'bishop_moves'
-require_relative 'queen_moves'
-require_relative 'king_moves'
-require_relative 'pawn_moves'
+require_relative 'rook_moves/rook_moves'
+require_relative 'knight_moves/knight_moves'
+require_relative 'bishop_moves/bishop_moves'
+require_relative 'queen_moves/queen_moves'
+require_relative 'king_moves/king_moves'
+require_relative 'pawn_moves/pawn_moves'
 require_relative 'movable'
 
 # Factory class for creating instances of the piece's moves.

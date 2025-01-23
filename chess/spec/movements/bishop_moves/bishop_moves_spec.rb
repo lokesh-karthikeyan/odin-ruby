@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/board/board'
-require_relative '../../lib/movements/bishop_moves'
+require_relative '../../../lib/board/board'
+require_relative '../../../lib/movements/bishop_moves/bishop_moves'
 
 describe BishopMoves do
   describe '#legal_moves' do

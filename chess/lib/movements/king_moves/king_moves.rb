@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'routes'
-require_relative 'movable'
-require_relative '../checkable/checkable'
+require_relative '../routes'
+require_relative '../movable'
+require_relative '../../checkable/checkable'
 
 # Computes the King's possible legal moves.
 class KingMoves

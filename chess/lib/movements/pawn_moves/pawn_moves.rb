@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'movable'
-require_relative 'pawns/black_pawn_moves'
-require_relative 'pawns/white_pawn_moves'
+require_relative '../movable'
+require_relative 'black_pawn_moves'
+require_relative 'white_pawn_moves'
 
 # Abstract class to compute Pawn's possible legal moves.
 class PawnMoves
