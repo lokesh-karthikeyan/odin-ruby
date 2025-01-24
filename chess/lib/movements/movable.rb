@@ -12,6 +12,20 @@ module Movable
     moves
   end
 
+  def find_allies(board, piece_color, allies = [])
+    board.each_with_index do |row, row_index|
+      row.each_index do |column_index|
+        position = [row_index, column_index]
+
+        allies << position if color(position) == piece_color
+      end
+    end
+
+    allies
+  end
+
+  def find_king(piece_positions) = piece_positions.each { |position| return position if piece(position) == :King }
+
   def range?(position) = position.all?(0..7)
 
   def compute_position(route, spot) = route.zip(spot).map(&:sum)
