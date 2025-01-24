@@ -44,55 +44,66 @@ class KingMoves
   def king_safe?(board, location) = Checkable.enemy_whereabouts(board, location).empty?
 
   def castling_moves(moves = [])
-    piece_color = color(spot).to_s
-    king_side_method = "#{piece_color}_king_side_castling?"
-    queen_side_method = "#{piece_color}_queen_side_castling?"
+    piece_color = color(spot)
 
-    moves << king_side_castle_move if send(king_side_method)
-    moves << queen_side_castle_move if send(queen_side_method)
+    moves << castle_move_spot(king_side: true) if king_side_castling?(piece_color)
+    moves << castle_move_spot(queen_side: true) if queen_side_castling?(piece_color)
     moves
   end
 
-  def black_king_side_castling?
-    move_state.black_king_side_castle? && king_safe?(board, spot) &&
-      castling_spots_empty?(:black_king) && castling_spots_safe?(:black_king)
+  def king_side_castling?(piece_color)
+    castling_side = "#{piece_color}_king".to_sym
+
+    castling?(castling_side) && king_safe?(board, spot) &&
+      king_side_pieces_in_place?(piece_color) && castling_spots_safe?(castling_side)
   end
 
-  def black_queen_side_castling?
-    move_state.black_queen_side_castle? && king_safe?(board, spot) &&
-      castling_spots_empty?(:black_queen) && castling_spots_safe?(:black_queen)
+  def queen_side_castling?(piece_color)
+    castling_side = "#{piece_color}_queen".to_sym
+
+    castling?(castling_side) && king_safe?(board, spot) &&
+      queen_side_pieces_in_place?(piece_color) && castling_spots_safe?(castling_side)
   end
 
-  def white_king_side_castling?
-    move_state.white_king_side_castle? && king_safe?(board, spot) &&
-      castling_spots_empty?(:white_king) && castling_spots_safe?(:white_king)
+  def castling?(castling_side)
+    method_name = "#{castling_side}_side_castle?"
+
+    move_state.send(method_name)
   end
 
-  def white_queen_side_castling?
-    move_state.white_queen_side_castle? && king_safe?(board, spot) &&
-      castling_spots_empty?(:white_queen) && castling_spots_safe?(:white_queen)
+  def king_side_pieces_in_place?(piece_color)
+    expectations = [[:King, piece_color], ['', ''], ['', ''], [:Rook, piece_color]]
+    king_side_castle_spots = piece_color == :white ? king_row(white: true).last(4) : king_row(black: true).last(4)
+    king_side_castle_spots = king_side_castle_spots.each { |piece_attr| piece_attr.each(&:strip) if is_a?(String) }
+    expectations == king_side_castle_spots
   end
 
-  def castling_spots_empty?(piece_type) = castling_spots[piece_type].all? { |location| null_piece?(location) }
-
-  def castling_spots_safe?(piece_type) = castling_spots[piece_type].last(2).all? { |location| safe_position?(location) }
-
-  def king_side_castle_move
-    route = Routes::KING_SIDE_CASTLE
-    compute_position(route, spot)
+  def queen_side_pieces_in_place?(piece_color)
+    expectations = [[:Rook, piece_color], ['', ''], ['', ''], ['', ''], [:King, piece_color]]
+    queen_side_castle_spots = piece_color == :white ? king_row(white: true).first(5) : king_row(black: true).first(5)
+    queen_side_castle_spots = queen_side_castle_spots.each { |piece_attr| piece_attr.each(&:strip) if is_a?(String) }
+    expectations == queen_side_castle_spots
   end
 
-  def queen_side_castle_move
-    route = Routes::QUEEN_SIDE_CASTLE
+  def king_row(black: false, white: false)
+    return board.first.map { |spot| [spot.piece.type, spot.piece.color] } if black
+
+    board.last.map { |spot| [spot.piece.type, spot.piece.color] } if white
+  end
+
+  def castling_spots_safe?(piece_type) = castling_spots[piece_type].all? { |location| safe_position?(location) }
+
+  def castle_move_spot(king_side: false, queen_side: false)
+    route = Routes::KING_SIDE_CASTLE if king_side
+    route = Routes::QUEEN_SIDE_CASTLE if queen_side
+
     compute_position(route, spot)
   end
 
   def castling_spots
     {
-      black_king: [[0, 5], [0, 6]],
-      black_queen: [[0, 1], [0, 2], [0, 3]],
-      white_king: [[7, 5], [7, 6]],
-      white_queen: [[7, 1], [7, 2], [7, 3]]
+      black_king: [[0, 5], [0, 6]], black_queen: [[0, 2], [0, 3]],
+      white_king: [[7, 5], [7, 6]], white_queen: [[7, 2], [7, 3]]
     }
   end
 end
