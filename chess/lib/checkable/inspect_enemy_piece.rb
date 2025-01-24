@@ -23,14 +23,21 @@ module InspectEnemyPiece
   def pawn_nearby?(location)
     king_piece_color = color(spot)
 
-    routes = if king_piece_color.eql?(:black)
-               [Routes::BLACK_PAWN_LEFT_CAPTURE] + [Routes::BLACK_PAWN_RIGHT_CAPTURE]
-             else
-               [Routes::WHITE_PAWN_LEFT_CAPTURE] + [Routes::WHITE_PAWN_RIGHT_CAPTURE]
-             end
-    adjacent_locations = routes.map { |route| compute_position(route, spot) }
+    return king?(spot) && black_pawn_nearby?(location) if king_piece_color == :white
 
-    king?(spot) && adjacent_locations.include?(location) && pawn?(location)
+    king?(spot) && white_pawn_nearby?(location) if king_piece_color == :black
+  end
+
+  def black_pawn_nearby?(location)
+    routes = [Routes::WHITE_PAWN_LEFT_CAPTURE] + [Routes::WHITE_PAWN_RIGHT_CAPTURE]
+    adjacent_locations = routes.map { |route| compute_position(route, spot) }
+    adjacent_locations.include?(location) && pawn?(location)
+  end
+
+  def white_pawn_nearby?(location)
+    routes = [Routes::BLACK_PAWN_LEFT_CAPTURE] + [Routes::BLACK_PAWN_RIGHT_CAPTURE]
+    adjacent_locations = routes.map { |route| compute_position(route, spot) }
+    adjacent_locations.include?(location) && pawn?(location)
   end
 
   def king?(location) = piece(location) == :King
