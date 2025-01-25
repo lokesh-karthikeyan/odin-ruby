@@ -10,6 +10,11 @@ class GameRecords
     logs[key_for_logs] += 1
   end
 
+  def update_state(last_move_info, logs_info)
+    self.last_state = last_move_info
+    logs.merge!(logs_info)
+  end
+
   private
 
   def initialize
