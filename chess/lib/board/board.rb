@@ -29,7 +29,7 @@ class Board
         q: [:Queen, [:black, ' ♛ ']], k: [:King, [:black, ' ♚ ']],
         R: [:Rook, [:white, ' ♜ ']], N: [:Knight, [:white, ' ♞ ']], B: [:Bishop, [:white, ' ♝ ']],
         Q: [:Queen, [:white, ' ♛ ']], K: [:King, [:white, ' ♚ ']],
-        p: [:Pawn, [:black, '♟ ']], P: [:Pawn, [:white, '♟ ']],
+        p: [:Pawn, [:black, ' ♟ ']], P: [:Pawn, [:white, ' ♟ ']],
         ' ': ['', ['', '']]
       }
     end
