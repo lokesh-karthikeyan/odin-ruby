@@ -255,4 +255,32 @@ describe Board do
       end
     end
   end
+
+  describe '.update_pieces' do
+    let(:board_state) { board.create }
+
+    context 'When given a source spot & target spot' do
+      before do
+        board_state[1][1].piece.type = :Pawn
+        board_state[1][1].piece.color = :black
+        board_state[1][1].piece.icon = ' ♟ '
+      end
+      let(:source) { [1, 1] }
+      let(:target) { [3, 1] }
+
+      it "should update the source spot's attributes to the target spot's attributes" do
+        expect { board.update_pieces(source, target) }
+          .to change { board_state[3][1].piece.type }.from('').to(:Pawn)
+          .and change { board_state[3][1].piece.color }.from('').to(:black)
+          .and change { board_state[3][1].piece.icon }.from('').to(' ♟ ')
+      end
+
+      it 'should change the source spot to null piece' do
+        expect { board.update_pieces(source, target) }
+          .to change { board_state[1][1].piece.type }.from(:Pawn).to('')
+          .and change { board_state[1][1].piece.color }.from(:black).to('')
+          .and change { board_state[1][1].piece.icon }.from(' ♟ ').to('')
+      end
+    end
+  end
 end
