@@ -2,23 +2,32 @@
 
 require_relative 'box_factory/box_factory'
 
-# Creates a board object with full of boxes & pieces.
+# Board creation & modification.
 class Board
   class << self
+    attr_accessor :board_state
+
     def create(box = 8)
       board = Array.new(box) { Array.new(box) }
       assign_boxes(board, box)
-      board
+      self.board_state = board
+      board_state
     end
 
-    def place_pieces(piece_locations, board)
+    def place_pieces(piece_locations, board = board_state)
       piece_locations.length.times do |row_index|
         piece_locations.length.times do |column_index|
           indices = [row_index, column_index]
-          assign_pieces(piece_locations, board, indices)
+          assign_pieces(piece_locations, indices)
         end
       end
       board
+    end
+
+    def update_pieces(source_spot, target_spot)
+      piece_attributes = fetch_piece_attributes(source_spot)
+      assign_piece_attributes(source_spot)
+      assign_piece_attributes(target_spot, piece_attributes)
     end
 
     private
@@ -49,19 +58,26 @@ class Board
       column_label[column_index] + row_label[row_index]
     end
 
-    def assign_pieces(piece_locations, board, indices)
+    def assign_pieces(piece_locations, indices)
       key = piece_locations.dig(indices.first, indices.last).to_sym
-      assign_piece_type(board, indices, key)
-      assign_piece_color(board, indices, key)
-      assign_piece_icon(board, indices, key)
+      piece_attributes = fen_key[key].flatten
+      assign_piece_attributes(indices, piece_attributes)
     end
 
-    def assign_piece_type(board, indices, key) = board[indices.first][indices.last].piece.type = fen_key[key].first
-
-    def assign_piece_color(board, indices, key)
-      board[indices.first][indices.last].piece.color = fen_key[key].last.first
+    def fetch_piece_attributes(indices, piece_attributes = [])
+      row, column = indices
+      piece_attributes << board_state.dig(row, column).piece.type
+      piece_attributes << board_state.dig(row, column).piece.color
+      piece_attributes << board_state.dig(row, column).piece.icon
+      piece_attributes
     end
 
-    def assign_piece_icon(board, indices, key) = board[indices.first][indices.last].piece.icon = fen_key[key].last.last
+    def assign_piece_attributes(indices, piece_attributes = ['', '', ''])
+      row, column = indices
+      piece_type, piece_color, piece_icon = piece_attributes
+      board_state[row][column].piece.type = piece_type
+      board_state[row][column].piece.color = piece_color
+      board_state[row][column].piece.icon = piece_icon
+    end
   end
 end
