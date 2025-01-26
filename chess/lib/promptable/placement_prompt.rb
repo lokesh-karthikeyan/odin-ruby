@@ -19,6 +19,8 @@ module Promptable
         retry
       end
 
+      private
+
       def print_target_spot_prompt(player_name)
         target_spot = <<~TARGET_SPOT
           Enter the spot name to place the piece.

@@ -19,6 +19,8 @@ module Promptable
         retry
       end
 
+      private
+
       def print_resume_game_prompt
         game_type = <<~GAME_TYPE
           You've a saved game. Would you like to load that game?

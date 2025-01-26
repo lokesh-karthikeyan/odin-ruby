@@ -19,6 +19,8 @@ module Promptable
         retry
       end
 
+      private
+
       def print_player_mode_prompt
         player_mode = <<~PLAYER_MODE
           You can either play a single player game -> "Player vs AI" (or) a two player game -> "Player vs Player".

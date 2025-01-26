@@ -19,6 +19,8 @@ module Promptable
         retry
       end
 
+      private
+
       def print_player_name_prompt(id)
         player_name = <<~PLAYER_NAME
           #{'Player-1'.color_fg(:blue)} #{'->'.color_fg(:light_cyan)} \

@@ -20,6 +20,8 @@ module Promptable
         retry
       end
 
+      private
+
       def print_source_piece_prompt(player_name)
         source_piece = <<~SOURCE_PIECE
           Enter the spot name of the piece you want to move.
