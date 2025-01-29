@@ -10,7 +10,7 @@ class Movements
 
   def legal_moves
     ally_spots = find_allies(board, move_state.active_color)
-    self.spot = find_king(ally_spots)
+    self.spot = find_king(ally_spots).flatten
 
     ally_spots.each_with_object([]) do |ally_spot, movable_pieces|
       piece_movements = compute_movements(board, ally_spot, move_state)
