@@ -20,6 +20,7 @@ class Render
     print_top_bottom_borders
     print_board
     print_top_bottom_borders
+    print_empty_lines
   end
 
   private

@@ -27,4 +27,6 @@ module Renderable
   def print_separators = print '  󰡅  '.color_fg(:orange).color_bg(:black)
 
   def print_column_indicators = column_indicators.each { |column| print column.color_fg(:orange).color_bg(:black) }
+
+  def print_empty_lines = puts "\n\n"
 end
