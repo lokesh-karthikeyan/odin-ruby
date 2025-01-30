@@ -32,11 +32,13 @@ module Movable
 
   def piece(position) = board.dig(position.first, position.last).piece.type
 
+  def color(position) = board.dig(position.first, position.last).piece.color
+
+  def spot_label(position) = column_label[position.last] + row_label[position.first]
+
   def ally?(position)
     board.dig(spot.first, spot.last).piece.color == board.dig(position.first, position.last).piece.color
   end
-
-  def color(position) = board.dig(position.first, position.last).piece.color
 
   def enemy?(position)
     source_color = color(spot)
@@ -57,5 +59,16 @@ module Movable
   def move_piece!(duplicate_board, position, attributes)
     duplicate_board[position.first][position.last].piece.type = attributes.first
     duplicate_board[position.first][position.last].piece.color = attributes.last
+  end
+
+  def row_label = { 0 => '8', 1 => '7', 2 => '6', 3 => '5', 4 => '4', 5 => '3', 6 => '2', 7 => '1' }
+
+  def column_label = { 0 => 'A', 1 => 'B', 2 => 'C', 3 => 'D', 4 => 'E', 5 => 'F', 6 => 'G', 7 => 'H' }
+
+  def to_coordinates(spot_name)
+    spot_name = spot_name.upcase
+    column = column_label.key(spot_name[0])
+    row = row_label.key(spot_name[1])
+    [row, column]
   end
 end
