@@ -8,7 +8,7 @@ require_relative 'computation'
 class NextBestMove
   include Movable
 
-  def determine_move(best_move = { source: nil, target: nil, score: 999_999 })
+  def determine_move(best_move = { source: [], target: [], score: 999_999 })
     source_spots = compute_klass.black_side_source_locations(board, move_state)
     movement_info = compute_klass.generate_moves(source_spots, board, move_state)
     look_ahead_black_moves(movement_info, best_move)
