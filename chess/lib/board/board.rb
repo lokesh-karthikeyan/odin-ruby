@@ -33,6 +33,11 @@ class Board
       assign_piece_attributes(target_spot, piece_attributes)
     end
 
+    def replace_piece(target, piece)
+      piece_attributes = fen_key[piece.to_sym].flatten
+      assign_piece_attributes(target, piece_attributes)
+    end
+
     private
 
     def fen_key
