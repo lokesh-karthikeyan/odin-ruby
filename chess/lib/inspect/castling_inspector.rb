@@ -56,6 +56,14 @@ class CastlingInspector
     source == [7, 7] && piece_type.eql?(:Rook) && piece_color.eql?(:white)
   end
 
+  def left_white_rook_present? = board[7][0].piece.type == :Rook && board[7][0].piece.color == :white
+
+  def right_white_rook_present? = board[7][7].piece.type == :Rook && board[7][7].piece.color == :white
+
+  def left_black_rook_present? = board[0][0].piece.type == :Rook && board[0][0].piece.color == :black
+
+  def right_black_rook_present? = board[0][7].piece.type == :Rook && board[0][7].piece.color == :black
+
   private
 
   attr_accessor :board
