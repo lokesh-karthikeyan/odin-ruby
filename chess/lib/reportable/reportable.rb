@@ -37,56 +37,82 @@ module Reportable
 
   def print_check_message
     check = <<~CHECK
-      The King is in Check!
+      ─────────────X THE KING IS IN CHECK! X─────────────
     CHECK
     puts check.color_fg(:red)
   end
 
   def print_check_mate_message(winner)
     check_mate = <<~MATE
-      The King is in Check mate!!!
+
+      #{border}
+      #{'The King is in Check mate!!!'.color_fg(:red)}
       #{winner.color_fg(:blue)} #{'has WON the game!'.color_fg(:green)}
+      #{border}
+
     MATE
-    puts check_mate.color_fg(:red)
+    puts check_mate
   end
 
   def print_stale_mate_message
     stale_mate = <<~STALE_MATE
-      No legal moves available!
-      It's a #{'TIE'.color_fg(:yellow)} #{'by Stale mate!!'.color_fg(:orange)}
+
+      #{border}
+      #{'No legal moves available!'.color_fg(:orange)}
+      #{"It's a".color_fg(:orange)} #{'TIE'.color_fg(:yellow)} #{'by Stale mate!!'.color_fg(:orange)}
+      #{border}
+
     STALE_MATE
-    puts stale_mate.color_fg(:orange)
+    puts stale_mate
   end
 
   def print_three_fold_repetition_message
     three_fold_repetition = <<~THREE_FOLD_REPETITION
-      Detected identical game state for three times!
-      It's a #{'TIE'.color_fg(:yellow)} #{'by Three-Fold Repetition!!'.color_fg(:orange)}
+
+      #{border}
+      #{'Detected identical game state for three times!'.color_fg(:orange)}
+      #{"It's a".color_fg(:orange)} #{'TIE'.color_fg(:yellow)} #{'by Three-Fold Repetition!!'.color_fg(:orange)}
+      #{border}
+
     THREE_FOLD_REPETITION
-    puts three_fold_repetition.color_fg(:orange)
+    puts three_fold_repetition
   end
 
   def print_fifty_move_rule_message
     fifty_move_rule = <<~FIFTY_MOVE_RULE
-      No Pawn movements (or) enemy captures detected for the last 50 moves!
-      It's a #{'TIE'.color_fg(:yellow)} #{'by Fifty-Move rule!!'.color_fg(:orange)}
+
+      #{border}
+      #{'No Pawn movements (or) enemy captures detected for the last 50 moves!'.color_fg(:orange)}
+      #{"It's a".color_fg(:orange)} #{'TIE'.color_fg(:yellow)} #{'by Fifty-Move rule!!'.color_fg(:orange)}
+      #{border}
+
     FIFTY_MOVE_RULE
-    puts fifty_move_rule.color_fg(:orange)
+    puts fifty_move_rule
   end
 
   def print_file_saved_message
     file_saved = <<~FILE_SAVED
-      The Game has been successfully saved!
+
+      #{border}
+      #{'The Game has been successfully saved!'.color_fg(:green)}
       #{'Good bye!!'.color_fg(:orange)}
+      #{border}
+
     FILE_SAVED
-    puts file_saved.color_fg(:green)
+    puts file_saved
   end
 
   def print_exit_message(active_player, inactive_player)
     exit_message = <<~EXIT_MESSAGE
+
+      #{border}
       #{'The Game was won by'.color_fg(:green)} #{inactive_player.color_fg(:blue)} \
       #{'due to'.color_fg(:green)} #{active_player.color_fg(:blue)} #{'just quitting the game!'.color_fg(:green)}
+      #{border}
+
     EXIT_MESSAGE
     puts exit_message
   end
+
+  def border = '================================ • ✠ • ================================'.color_fg(:yellow)
 end
