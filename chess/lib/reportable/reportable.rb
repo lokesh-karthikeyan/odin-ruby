@@ -102,6 +102,18 @@ module Reportable
     puts file_saved
   end
 
+  def print_file_unsaved_message
+    file_not_saved = <<~FILE_NOT_SAVED
+
+      #{border}
+      #{'No moves detected to save the game. File operations has been ABORTED!'.color_fg(:red)}
+      #{'Good bye!!'.color_fg(:orange)}
+      #{border}
+
+    FILE_NOT_SAVED
+    puts file_not_saved
+  end
+
   def print_exit_message(active_player, inactive_player)
     exit_message = <<~EXIT_MESSAGE
 
