@@ -23,6 +23,7 @@ module Promptable
 
       def print_player_name_prompt(id)
         player_name = <<~PLAYER_NAME
+
           #{'Player-1'.color_fg(:blue)} #{'->'.color_fg(:light_cyan)} \
           #{'White'.color_bg(:cream).color_fg(:blue)} #{'colored pieces and'.color_fg(:light_cyan)} \
           #{'Player-2'.color_fg(:blue)} #{'->'.color_fg(:light_cyan)} \
