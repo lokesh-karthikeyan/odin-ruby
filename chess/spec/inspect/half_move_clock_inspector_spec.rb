@@ -46,8 +46,8 @@ describe HalfMoveClockInspector do
 
     context 'When the count is incrementable' do
       context 'When the source is not a "Pawn" && the target is a "Null piece"' do
-        let(:source_piece_attributes) { %i[Queen black] }
-        let(:target_piece_attributes) { ['', ''] }
+        let(:source_piece_attributes) { :Queen }
+        let(:target_piece_attributes) { '' }
 
         subject { inspector.increment_count?(source_piece_attributes, target_piece_attributes) }
 
@@ -55,8 +55,8 @@ describe HalfMoveClockInspector do
       end
 
       context 'When during the castling move' do
-        let(:source_piece_attributes) { %i[King white] }
-        let(:target_piece_attributes) { ['', ''] }
+        let(:source_piece_attributes) { :King }
+        let(:target_piece_attributes) { '' }
 
         subject { inspector.increment_count?(source_piece_attributes, target_piece_attributes) }
 
