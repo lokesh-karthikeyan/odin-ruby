@@ -11,9 +11,9 @@ class WhitePawnMoves
     first_forward_step = move_forward
     second_forward_step = advance_two_steps?(first_forward_step) ? move_forward(double: true) : []
     diagonal_capture_moves = capture_moves
-    moves << first_forward_step << second_forward_step << diagonal_capture_moves
+    moves << first_forward_step << second_forward_step
     moves.keep_if(&:any?)
-    moves
+    moves + diagonal_capture_moves
   end
 
   private
@@ -45,7 +45,7 @@ class WhitePawnMoves
 
     moves << left_diagonal_location if capture_move?(left_diagonal_location) || left_side_en_passant?
     moves << right_diagonal_location if capture_move?(right_diagonal_location) || right_side_en_passant?
-    moves.length.eql?(1) ? moves.flatten : moves
+    moves
   end
 
   def capture_move?(location) = range?(location) && enemy?(location)
